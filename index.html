@@ -3,26 +3,124 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Capital Census</title>
-<style>
-  :root { color-scheme: light dark; }
-  body {
-    font-family: ui-sans-serif, system-ui, -apple-system, "Helvetica Neue", sans-serif;
-    max-width: 46rem; margin: 0 auto; padding: 4rem 1.5rem;
-    line-height: 1.7; font-size: 1.05rem;
-  }
-  h1 { font-size: 1.9rem; margin-bottom: .25rem; letter-spacing: -0.01em; }
-  .sub { opacity: .65; margin-top: 0; }
-  .note { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid rgba(128,128,128,.3); opacity: .75; font-size: .95rem; }
-</style>
+<title>The Capital Census</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Capital Census</h1>
-  <p class="sub">An open dataset and research project on capital.</p>
 
-  <p>This site is being prepared. Data and papers will be published here,
-     with permanent identifiers assigned via Zenodo (data) and SSRN/arXiv (papers).</p>
+<header class="site">
+  <a class="wordmark" href="index.html">The Capital Census</a>
+  <nav>
+    <a href="index.html" aria-current="page">Monthly Index</a>
+    <a href="methodology.html">Methodology</a>
+    <a href="ledger.html">Verification Ledger</a>
+    <a href="data.html">Data</a>
+  </nav>
+</header>
 
-  <p class="note">Site opening September 2026.</p>
+<h1>The Capital Census</h1>
+<p class="lede">A measurement of what the world's investors actually hold &mdash; estimated from
+public data, with the method, the calibration record, and the corrections all published alongside
+the figures.</p>
+
+<p>Estimates of the global market portfolio exist, but their construction is not disclosed. This
+project takes the opposite position. Every input is public, every step is documented, and every
+revision stays on the record &mdash; including results that ran against our own hypotheses.</p>
+
+<div class="box">
+  <p style="margin:0">The index takes no discretionary bets. Its weights are the aggregate holdings
+  of all investors, chosen by no one.</p>
+</div>
+
+<h2>Capital Census Global Market Portfolio Index</h2>
+<p>Short form: <strong>CC-GMP Index</strong>. Released monthly. The first official release is dated
+<strong>September 1, 2026</strong>.</p>
+
+<div class="scroll">
+<table>
+  <thead>
+    <tr><th>Release</th><th>As of</th><th class="num">Index value</th><th>Release note</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>No. 1</td>
+      <td>2026-09-01</td>
+      <td class="num tbd">[TBD]</td>
+      <td class="tbd">[TBD: link]</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="box">
+  <strong>Release note &mdash; No. 1</strong>
+  <p class="tbd" style="margin-bottom:0">[TBD: what was computed this month, what was re-examined,
+  and what remains open. Non-confirmations belong here as much as confirmations.]</p>
+</div>
+
+<h2>What is disclosed</h2>
+<p>All rules, calibrations, and known limitations are disclosed in full, including results
+unfavorable to our own hypotheses. Ten limitations define the boundary within which any figure here
+may be read; they are listed in <a href="methodology.html">Methodology</a>, and readers are asked to
+read them before using any figure published on this site.</p>
+
+<h2>Papers</h2>
+<div class="scroll">
+<table>
+  <thead><tr><th>Paper</th><th>Status</th><th>Identifier</th></tr></thead>
+  <tbody>
+    <tr>
+      <td>Estimating the Investable Global Market Portfolio from Public Data:
+          A Fully Reproducible Methodology</td>
+      <td>In preparation</td>
+      <td class="tbd">[TBD: SSRN / arXiv q-fin.PM]</td>
+    </tr>
+    <tr>
+      <td>Can the Market Portfolio Beat 60/40? A 50-Year Equivalence Test</td>
+      <td>In preparation</td>
+      <td class="tbd">[TBD: SSRN / arXiv q-fin.PM]</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h2>Data</h2>
+<p><a href="data.html">50-Year Weight History of the Investable Global Market Portfolio
+(1976&ndash;2026)</a> &mdash; released as a citable dataset with a persistent identifier, a
+manifest, and SHA-256 checksums.</p>
+
+<h2>Readers in Japan</h2>
+<p>The author resides in Japan. This site provides general information to an unspecified audience
+and does not constitute investment advisory business under the Financial Instruments and Exchange
+Act of Japan. Individual consultations are not accepted.</p>
+
+<footer class="site">
+  <h2>Disclaimer</h2>
+  <p>This publication is independent, non-commercial research provided for informational and
+     educational purposes only. It does not constitute investment advice, an offer, or a
+     solicitation to buy or sell any security or financial product, and it is not personalized to
+     any reader's circumstances. The author is not a registered investment adviser in any
+     jurisdiction and does not provide individual advice. All investing involves risk, including
+     loss of principal. Past performance and backtested results do not guarantee future results.
+     Backtested results are hypothetical, do not reflect actual trading, and are net of no fees or
+     costs unless stated otherwise.</p>
+
+  <h2>Third-party marks</h2>
+  <p>This research is not affiliated with, endorsed by, or sponsored by MSCI, State Street,
+     Goldman Sachs, Bloomberg, BIS, or any index provider or data vendor mentioned. All trademarks
+     are the property of their respective owners. References to third-party estimates are for
+     scholarly comparison only.</p>
+  <p>The Capital Census is an independent, non-commercial research project. It is not affiliated
+     with State Street, MSCI, or any index provider, nor with any government statistical agency.
+     &lsquo;Global Market Portfolio&rsquo; is used as a generic academic term.</p>
+
+  <h2>Corrections policy</h2>
+  <p>Corrections are made openly. Superseded figures remain visible in the revision history. We do
+     not delete published results, including results unfavorable to our own prior claims.</p>
+
+  <p style="margin-top:1.5rem">The Capital Census &middot;
+     <span class="tbd">[TBD: author line]</span></p>
+</footer>
+
 </body>
 </html>
