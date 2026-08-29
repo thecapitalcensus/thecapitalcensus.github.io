@@ -19,39 +19,295 @@
 </header>
 
 <h1>Verification Ledger</h1>
-<p class="lede">Every check that was run, and how it came out &mdash; including the ones that did
-not confirm what was expected.</p>
+<p class="lede">Every test we ran, every proposition we adopted, and every governance failure we
+caught &mdash; including results unfavourable to our own hypotheses, and errors made by our own
+referees.</p>
 
-<p>This is the public edition of the project's internal ledger. Entries concerning internal
-governance are summarised rather than reproduced; the section numbering of the internal ledger is
-preserved so the two can be read against each other.</p>
+<p>We publish this because the ledger <em>is</em> the work. This project offers measurement and
+disclosure, not performance. Roles below are abbreviated as <strong>supervisor</strong> (referee),
+<strong>implementer</strong> (execution), and <strong>principal</strong> (final authority); how the
+work is actually carried out, including the use of AI tools, is set out in
+<a href="methodology.html#ai">Methodology &sect;7</a>.</p>
 
-<p>All rules, calibrations, and known limitations are disclosed in full, including results
-unfavorable to our own hypotheses. A ledger recording only confirmations would be evidence of
-nothing, so non-confirmations are entered under the same rules as confirmations, and are never
-removed once entered.</p>
-
-<h2>Entries</h2>
+<h2>Part 1 &mdash; Tests</h2>
 <div class="scroll">
 <table>
-  <thead>
-    <tr><th>ID</th><th>Date</th><th>Check</th><th>Outcome</th><th>Note</th></tr>
-  </thead>
+  <thead><tr><th>ID</th><th>Test</th><th>Headline result</th><th>Consequence</th></tr></thead>
   <tbody>
-    <tr>
-      <td class="tbd">[TBD]</td>
-      <td class="tbd">[TBD]</td>
-      <td class="tbd">[TBD: what was tested]</td>
-      <td class="tbd">[TBD: confirmed / not confirmed]</td>
-      <td class="tbd">[TBD]</td>
-    </tr>
+    <tr><td>B1</td><td>Annual-approximation backtest (2006&ndash;25)</td>
+        <td>GMP &asymp; 60/40</td>
+        <td>Overturned by B2; recorded as a model-risk case</td></tr>
+    <tr><td>B2</td><td>Monthly ETF data, fixed weights (2008&ndash;26)</td>
+        <td>GMP fell short (Sharpe 0.448 vs 0.525); significantly worse in high-inflation regimes
+            (Newey&ndash;West p = 0.038); ahead in only 6.5% of rolling three-year windows</td>
+        <td>No basis for performance claims</td></tr>
+    <tr><td>B3</td><td>Bond currency-effect-removed variant</td>
+        <td>The shortfall disappeared; indistinguishable from 60/40 (Sharpe 0.534 vs 0.525,
+            p = 0.842). The removal effect, +0.215%/month (p = 0.0075), was then the series' only
+            robust finding</td>
+        <td>Basis for a bond currency specification &mdash; later <strong>not confirmed</strong>
+            (see B6)</td></tr>
+    <tr><td>B4</td><td>Float-weight variant</td>
+        <td>Buy-and-hold drifts equity from 47% to 66%; the improvement is equity beta; still no
+            edge over 60/40</td>
+        <td>Buy-and-hold only; the rulebook specification (float + annual reconstitution) was first
+            tested in B6 (this entry corrected per B6)</td></tr>
+    <tr><td>B5</td><td>Long-run regime test (1968&ndash;2026)</td>
+        <td>The only allocation that preserved real value in 1968&ndash;82 held gold (+2.85%)
+            &mdash; but private gold ownership was illegal in the United States until 1975. The
+            then-feasible version returned &minus;6.71% real, behind 60/40 (&minus;3.11%)</td>
+        <td>The account in which gold carried the 1970s is a non-reproducible one-off; added to the
+            prohibited-claims list</td></tr>
+    <tr><td>E0</td><td>Estimation engine v0</td>
+        <td>Bond block +12.92pt against the calibration corridor; cause: no investability filter
+            (onshore China, USD 28.7tn, the largest single factor)</td>
+        <td>Three design decisions: listed instruments only, in-house filter, eligibility
+            ratios</td></tr>
+    <tr><td>E1</td><td>Estimation engine v1</td>
+        <td>Equity block +11.65pt in the opposite direction (over-filtering); the divergence
+            decomposed completely into four design choices plus benchmark private assets</td>
+        <td>Exposed a category error in the gate itself</td></tr>
+    <tr><td>E2</td><td>Estimation engine v2</td>
+        <td>Passed the revised gates 3/3 (max 0.46pt) but <strong>not adopted</strong> &mdash; A9
+            uncalibrated; the registered rules resolved the conflict against adoption. A1
+            recalibrated 0.85 &rarr; 0.7365</td>
+        <td>Precedent: passing the gate is not sufficient</td></tr>
+    <tr><td>E3</td><td>Estimation engine v3, first stage</td>
+        <td>A9&prime; (investor-holdings ratio 0.9709) calibrated; A4 replaced with country-level
+            aggregation; A3 calibration failed. Gates 3/3 (&minus;4.36 / +5.36 / &minus;0.89).
+            <strong>Not adopted; methodology only, frozen and published</strong> (termination
+            rule)</td>
+        <td>Methodology frozen 2026-08-27T08:35:21Z, 14 files</td></tr>
+    <tr><td>H1</td><td>2025 hold-out (quasi-clean)</td>
+        <td>Three major blocks 3/3 (&minus;5.09 / +5.56 / &minus;0.47); direction of change
+            3/3</td><td>Pass</td></tr>
+    <tr><td>H2</td><td>2024 hold-out (clean, with noted exceptions)</td>
+        <td>Three major blocks 3/3 (&minus;4.94 / +5.58 / &minus;0.63); direction of change
+            3/3</td><td>Pass</td></tr>
+    <tr><td>B6</td><td>Rulebook-compliant, vintage-consistent 50 years (1976&ndash;2026, 606
+            months)</td>
+        <td>First test of the rulebook specification. Versus 60/40: return &minus;1.18pt/yr
+            (p = 0.040), Sharpe +0.004 (p = 0.919); at equal volatility +0.04pt/yr (p = 0.935).
+            Twenty-year-window advantage: 0.8%. Equivalence within &plusmn;1.0pt/yr established
+            (TOST p = 0.012). High-inflation Sharpe 0.073 (fifth of six strategies). B3's currency
+            effect <strong>not confirmed</strong> (one fourteenth the size, significance gone; in
+            JPY terms 2021&ndash;22 it was &minus;6.30pt/yr, p = 0.030). Non-blinded, not
+            pre-registered</td>
+        <td>Propositions 8&ndash;12 adopted; rulebook &sect;11 amendment procedure opened</td></tr>
+    <tr><td>B6.1</td><td>B6 with central-bank deduction and time-consistent sub-splits (directional
+            pre-registration)</td>
+        <td>Central-bank holdings reached 27.5% of the developed-sovereign block at the 2022 QE
+            peak, larger than B6 assumed. After deduction, the 2025 reconstruction matched the
+            published v3 estimate within 1.8pt of total absolute difference, down from 8.7pt
+            &mdash; independent confirmation of the correction's direction. Versus 60/40: shortfall
+            &minus;1.06 &rarr; &minus;0.95pt/yr; equal-risk equivalence maintained (TOST
+            &plusmn;1.0pt, p = 0.0177). Sub-split time variation moves weights by up to 4.2pt with
+            zero contribution to performance. Unfavourable results reported: inflation beta
+            persists at 0.769 (from 0.814; 60/40: 0.572), and the equivalence bound worsened from
+            &plusmn;0.74 to &plusmn;0.80pt. Non-blinded, directional registration only</td>
+        <td>B6 limitation 1 resolved, limitation 2 partially; proposition 11 updated; the
+            fifty-year weight history promoted to publication candidate</td></tr>
+    <tr><td>B7</td><td>Half-century four-portfolio comparison (1976&ndash;2026.8, 608 months, USD):
+            rulebook GMP vs 60/40 vs stocks/gold 50/50 vs stocks/bonds/gold one third each</td>
+        <td>All four statistically indistinguishable (every difference versus 60/40 p &gt; 0.05).
+            GMP: lowest volatility (8.05%), highest full-period Sharpe (0.569, not significant).
+            GMP&ndash;60/40 correlation 0.944. Market-cap gold (average 3.5%) contributed only
+            +0.56pt/yr even in a decade when gold rose 335%, dwarfed by the equity underweight's
+            &minus;2.52pt. Ten-year real-return windows positive 100% of the time (worst +0.08%)
+            &mdash; but the same holds for 60/40. Rank stability favours the one-third allocation.
+            Non-blinded, exploratory; costs ignored; single path; multiple comparisons
+            uncorrected</td>
+        <td>Propositions 13&ndash;15 adopted; prohibited claim 9 added</td></tr>
   </tbody>
 </table>
 </div>
 
-<h2>How to read an entry</h2>
-<p class="tbd">[TBD: the ledger's conventions &mdash; what counts as a check, what
-&ldquo;not confirmed&rdquo; means operationally, and how a superseded entry is marked.]</p>
+<h2>Part 2 &mdash; Adopted propositions</h2>
+<ol>
+  <li><strong>The investable GMP has no performance advantage over 60/40.</strong> Fixed weights
+      fall short; the variant specifications are equivalent. Eighteen years, 219 months, all
+      regimes: zero evidence of superiority.</li>
+  <li><strong>Currency exposure on the bond side is a variable to be chosen deliberately.</strong>
+      In the high-inflation, strong-dollar regime it was worth +0.215%/month (p = 0.0075),
+      cumulatively +1.75% in 2021&ndash;22 &mdash; then the series' only statistically robust
+      finding. <em>Superseded in scale by B6, which did not confirm it; retained for the
+      record.</em></li>
+  <li><strong>The account of gold as an inflation shield cannot be confirmed in any then-feasible
+      form.</strong> It depends on the one-off revaluation as gold left its official price in
+      1971&ndash;74. Prohibited in all public claims.</li>
+  <li><strong>Preservation of real purchasing power is not guaranteed even by global
+      diversification.</strong> Real maximum drawdown in 1968&ndash;82 exceeded 30%. The honest
+      ceiling is an uncertain but positive-expected-value store of value, as against the certain
+      erosion of zero-yield deposits.</li>
+  <li><strong>There is no unique &ldquo;correct&rdquo; set of GMP weights.</strong> External
+      estimates put equity anywhere from 36% to 50%; our own v0 and v1 missed the same primary data
+      by &plusmn;12pt in opposite directions. Convergence is a function of filter calibration, not
+      an approach to truth.</li>
+  <li><strong>The IG-credit offset between our estimate and index-eligible estimates has been
+      stable at +5.8 to +6.4pt for three years.</strong> A consistent fixed difference reflecting
+      what is measured &mdash; investor holdings versus index membership. Explainability of
+      divergence, not its smallness, is the quality criterion.</li>
+  <li><strong>The frozen methodology did not break on two unseen years.</strong> Two hold-outs
+      passed, direction tests 6/6 &mdash; but these are six correlated binary outcomes, and no
+      statistical power is claimed.</li>
+  <li><strong>Fifty rulebook-compliant years change nothing: no performance advantage over 60/40
+      (B6).</strong> At equal risk the two are indistinguishable (+0.04pt/yr, p = 0.935). The GMP
+      is not an allocation that loses; it is an allocation that takes less risk.</li>
+  <li><strong>The Sharpe advantage seen in early versions was the contribution of contrarian
+      rebalancing toward fixed weights, not of market-portfolio composition (B6).</strong> The two
+      must not be conflated when explaining diversification.</li>
+  <li><strong>Following market capitalisation structurally includes buying high (B6).</strong> In
+      January 1980 the rules held 12.9% gold; in January 1990, 35.6% equities. Not a defect but a
+      definition &mdash; and one that must be disclosed.</li>
+  <li><strong>&ldquo;Neither wins nor loses&rdquo; can only be asserted through an equivalence test
+      (B6, updated by B6.1).</strong> 90% confidence interval &plusmn;0.80pt/yr; TOST p = 0.0177 at
+      &plusmn;1.0pt bounds. &ldquo;The difference is zero&rdquo; can never be claimed from any
+      sample. Note the asymmetry: the central-bank correction <em>improved</em> returns, which moved
+      the point estimate away from zero and <em>worsened</em> the bound from &plusmn;0.74 to
+      &plusmn;0.80pt. Corrections do not necessarily strengthen one's claims.</li>
+  <li><strong>Regime neutrality distinguishes the GMP from single-asset concentration, but not from
+      60/40 or equal weights (B6).</strong> The differentiator is provenance &mdash; the aggregate
+      holdings of all investors &mdash; not outcomes. Its high-inflation risk-adjusted rank was
+      fifth of six; inflation resilience must never be a selling point.</li>
+  <li><strong>Market-cap gold holdings capture almost none of gold's upside (B7).</strong> Even in
+      a decade when gold rose 335%, an average 3.5% weight contributed +0.56pt/yr against the
+      equity underweight's &minus;2.52pt. The GMP must not be suggested as a way to express
+      conviction in gold.</li>
+  <li><strong>&ldquo;No negative real ten-year window in fifty years (worst +0.08%)&rdquo; is true
+      &mdash; but not unique to the GMP (60/40: also 100%), barely positive, and USD-denominated
+      against U.S. CPI (B7).</strong></li>
+  <li><strong>Choosing among diversified portfolios is choosing how much risk to take, not which is
+      better (B7).</strong> All four lie nearly on one line in risk&ndash;return space
+      (GMP&ndash;60/40 correlation 0.944); differentiation by outcome quality is impossible, and
+      rank stability favours the one-third allocation. What remains is provenance &mdash; weights
+      chosen by no one.</li>
+</ol>
+
+<h2>Part 3 &mdash; Governance events</h2>
+
+<h3>A model-risk case: the annual approximation reversed by monthly data</h3>
+<p>B1 (annual granularity) and B2 (monthly, actual instruments) reached opposite conclusions.
+Lesson adopted: coarse-grained tests must not drive decisions.</p>
+
+<h3>A confounded proxy: the shortfall was currency, not allocation</h3>
+<p>B2's shortfall was driven primarily by unhedged currency exposure, not by the asset mix. Lesson:
+confirm that what is being tested matches what is being specified &mdash; before testing.</p>
+
+<h3>Pre-registration with teeth</h3>
+<p>v2 passed its gates 3/3 and was still not adopted, because a registered rule said an
+uncalibrated parameter blocks adoption. v3 was likewise not adopted over a parameter whose
+influence is only &plusmn;0.6pt. Rules earn their keep precisely when they hurt.</p>
+
+<h3>Gate revision after seeing results: legitimate and contaminated at once</h3>
+<p>After viewing v1's results, the gates were revised to like-for-like universes and matched dates.
+The supervisor recorded, in its own words, that the revision favoured our engine &mdash; and
+published the old gates alongside the new. A revision can be methodologically correct and still
+void the protections of pre-registration. Both facts are on the record.</p>
+
+<h3>A concept change after results</h3>
+<p>The redefinition A9 &rarr; A9&prime; was decided after v2's results were seen. It was justified
+on theory alone &mdash; consistency with a prior design decision &mdash; and never on outcomes. The
+prohibition on outcome-based justification stands.</p>
+
+<h3>Referee contamination: how we caught and contained it</h3>
+<p>Through a procedure-design error, the supervisor received the 2025 reference values before
+scoring. The principal caught it. Containment: recusal, a mechanical rule (widen the range rather
+than pick a point), and scoring restricted to machine comparison. The 2025 hold-out was downgraded
+to quasi-clean. Lesson: the referee is also subject to audit.</p>
+
+<h3>Establishing implementer blinding</h3>
+<p>An instruction to pass reference values to the implementer was withdrawn &mdash; flagged by the
+principal &mdash; and the process was redesigned around freezing, hashing, and blind execution.
+Executor and referee were separated from that point on. One related fact is recorded plainly: a
+hash pre-commitment was proposed and, by the principal's decision, omitted; the hold-out ratings
+state &ldquo;no pre-commitment&rdquo; accordingly, and accurate labelling substitutes for the
+missing mechanism.</p>
+
+<h3>A defect in the freeze</h3>
+<p>The frozen vintage code turned out to embed a v2 build: the frozen artefact was not the whole
+execution path. It was resolved with a disclosed out-of-freeze connection module, and the 2024
+rating carries the exception note. Lesson: verify the freeze across the entire execution path, not
+the file list.</p>
+
+<h3>The referee's wrong assumption &mdash; and why the error ran against us</h3>
+<p>The supervisor assumed a first-quarter as-of date for the 2024 external reference; the true date
+was end-June, and the principal's information was correct. The three-month misalignment was
+quantified and noted as biasing <em>against</em> the engine. Handled within the registered
+protocol.</p>
+
+<h3>When the implementer was right to disobey</h3>
+<p>An instruction to deduct recycled gold was not executed. The implementer documented that it
+conflicted with the inventory definition in use, and the deviation was approved as a correction of
+a flawed instruction. Instructions are also subject to audit.</p>
+
+<h2>Part 4 &mdash; Contamination map</h2>
+<p>External reference estimates (used for calibration and hold-out scoring; values not republished
+here) are denoted by vintage year.</p>
+<div class="scroll">
+<table>
+  <thead><tr><th>Party</th><th>2026 vintage</th><th>2025 vintage</th><th>2024 vintage</th></tr></thead>
+  <tbody>
+    <tr><td>Supervisor (referee)</td><td>Known throughout development</td>
+        <td>Received 2026-08-27, after v3 design; registered and documented</td>
+        <td>Unseen until scoring</td></tr>
+    <tr><td>Implementer</td><td>Present in reconciliation code since v0</td>
+        <td>Not received (prohibition observed)</td>
+        <td>Not received (prohibition observed)</td></tr>
+  </tbody>
+</table>
+</div>
+<p><strong>Ratings.</strong> 2026 gates &mdash; in-development validation, pre-registered but with
+the gate revision contaminated. 2025 &mdash; quasi-clean: implementer blind, supervisor
+contaminated. 2024 &mdash; clean: no pre-commitment, connection-module exception, three-month date
+misalignment noted.</p>
+
+<h2>Part 5 &mdash; Claims we prohibit ourselves from making</h2>
+<p>The following are prohibited in every public material we produce. They are listed here as
+prohibitions, not as claims.</p>
+<ol>
+  <li>Performance superiority over 60/40 or any benchmark.</li>
+  <li>Categorical statements that the index never trails the market average.</li>
+  <li>Inflation resilience argued from the 1970s.</li>
+  <li>Guarantee-like claims about preserving real purchasing power.</li>
+  <li>Deposit- or savings-like connotations.</li>
+  <li>Gold as a permanent portfolio stabiliser.</li>
+  <li>&ldquo;The longer you hold, the better&rdquo; &mdash; the twenty-year-window advantage is
+      0.8%.</li>
+  <li>Explanations that conflate rebalancing effects with market-portfolio theory.</li>
+  <li>Suggesting the GMP as a vehicle for conviction in gold; a 3.5% market-cap weight delivers
+      none of it (B7).</li>
+</ol>
+<p>Four statements are permitted verbatim, and only verbatim:</p>
+<div class="box">
+  <p>&ldquo;The index takes no discretionary bets. Its weights are the aggregate holdings of all
+  investors, chosen by no one.&rdquo;</p>
+  <p>&ldquo;All rules, calibrations, and known limitations are disclosed in full, including results
+  unfavorable to our own hypotheses.&rdquo;</p>
+  <p>&ldquo;Cost minimization is the only improvement that works with certainty.&rdquo;</p>
+  <p style="margin-bottom:0">&ldquo;Over our 50-year verification (1976&ndash;2026), the annualized
+  return difference versus a 60/40 portfolio was within &plusmn;0.80 percentage points at equal risk
+  (90% confidence interval; equivalence not superiority &mdash; TOST p = 0.0177 at &plusmn;1.0pt
+  bounds).&rdquo;</p>
+</div>
+<p>The full standards, including phrase-level examples of what each prohibition rules out, are
+maintained as an internal document and applied to every page before publication.</p>
+
+<h2>Part 6 &mdash; Open items</h2>
+<ul>
+  <li>A3 calibration (amendment procedure No. 1)</li>
+  <li>Rulebook &sect;11 reconsideration (amendment procedure No. 2, following B6's non-confirmation
+      of the currency effect)</li>
+  <li>Comparison against a real-world eight-asset equal-weight fund
+      <em>&mdash; closed by decision of 2026-08-28 (non-commercial scope)</em></li>
+  <li>JPY-numeraire re-runs <em>&mdash; closed by decision of 2026-08-28; all results are
+      USD-denominated and no claims are made for other numeraires</em></li>
+  <li>Time variation of the high-yield and inflation-linked shares (awaiting a free source)</li>
+  <li>Argentina determination</li>
+  <li>Second-vendor anchor for A1</li>
+  <li>Central-bank deduction beyond the three institutions</li>
+  <li>Countries not covered by BIS statistics</li>
+  <li>A fully date-matched 2024 vintage (optional)</li>
+</ul>
 
 <footer class="site">
   <h2>Disclaimer</h2>
