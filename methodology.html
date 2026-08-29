@@ -20,6 +20,7 @@
 
 <h1>Methodology</h1>
 <p class="lede">The estimation rule in full, together with what it cannot do.</p>
+
 <div class="box">
   <p style="margin:0">All figures published here are the author's own calculations from publicly
   available data. Sources are cited where used for calibration; no third-party proprietary data is
@@ -27,38 +28,186 @@
   survivorship, proxy, and coverage limitations). Errors, when found, are corrected with a visible
   revision history rather than silent edits.</p>
 </div>
-<p>This page is the English edition of the project's written protocol (v1.0). It is the
-authoritative description of how every figure on this site is produced. Where the protocol has
-changed, the change is recorded in <a href="#versions">Version history</a> rather than applied
-retroactively.</p>
+
+<p>This page is the English edition of the project's written protocol (Index Rulebook v1.0, as
+amended, 3rd revision). It is the authoritative description of how every figure on this site is
+produced. Where the protocol has changed, the change is recorded in
+<a href="#versions">Version history</a> rather than applied retroactively.</p>
 
 <h2>1. Scope and definitions</h2>
-<p class="tbd">[TBD: what the investable global market portfolio means here &mdash; asset classes in
-scope, the investability adjustment (including the central-bank deduction), and reporting
-frequency.]</p>
+<p>The estimand is defined strictly: <strong>the outstanding balance of listed, marketable assets
+issued in countries and currencies that satisfy the investability criteria, and held by parties
+other than the issuer &mdash; that is, by investors.</strong> Four consequences follow.</p>
+<ol>
+  <li>No screening by index-eligibility criteria (issue-size floors, ratings, or a vendor's
+      discretion). A privately placed or small issue is in scope as long as investors hold it.</li>
+  <li>Issuers' own retained holdings are excluded, because they are not held by investors.</li>
+  <li>Unlisted assets (private companies, direct real estate, private fund interests) are out of
+      scope and reported separately as a reference GMP.</li>
+  <li>Central-bank holdings for monetary-policy purposes are deducted, because they are
+      permanently withdrawn from the market.</li>
+</ol>
+
+<h3>Canonical notation: calculated 8 / published 7</h3>
+<p>The index is <strong>calculated on eight sleeves and officially published on seven</strong>. In
+official publications, investment-grade and high-yield credit are merged into a single credit
+sleeve; the IG/HY split is provided separately as an uncalibrated auxiliary estimate. All public
+materials use this canonical notation and never say simply &ldquo;eight sleeves&rdquo; or
+&ldquo;seven sleeves&rdquo;.</p>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>Sleeve</th><th>Formula</th></tr></thead>
+  <tbody>
+    <tr><td>Global equity</td><td>World Bank market capitalisation (prior year-end) &times; ACWI price roll-forward &times; A1</td></tr>
+    <tr><td>DM government bonds</td><td>BIS S13 for investable developed markets &minus; inflation-linked &minus; central-bank holdings (Fed, ECB, BoJ)</td></tr>
+    <tr><td>IG credit</td><td>(S12 + S11 &minus; S125A) for investable developed markets &times; A9&prime; &times; (1 &minus; A3)</td></tr>
+    <tr><td>High yield</td><td>same base &times; A9&prime; &times; A3</td></tr>
+    <tr><td>Securitised</td><td>S125A for investable developed markets &minus; Fed holdings of MBS and agency debt</td></tr>
+    <tr><td>EM debt</td><td>investable emerging markets: S13 + (S12 + S11 &minus; S125A) &times; A9&prime; + S125A</td></tr>
+    <tr><td>Inflation-linked</td><td>country-level aggregation (measured countries + residual band from measured ratios)</td></tr>
+    <tr><td>Gold</td><td>WGC above-ground stock (bars, coins, ETFs + official sector) &times; LBMA AM fix</td></tr>
+  </tbody>
+</table>
+</div>
+<p>Listed REITs and listed private-equity vehicles are included in the equity sleeve at their
+natural weight within market capitalisation, not held as separate sleeves. No overweight is applied
+as a proxy for private assets.</p>
 <p>All results are USD-denominated. No claims are made for other numeraires.</p>
 
 <h2>2. Data sources</h2>
-<p>All inputs are public. Third-party estimates are used for calibration only; their figures are
-not reproduced or redistributed here, and each source is cited below.</p>
-<p class="tbd">[TBD: source table &mdash; series, publisher, coverage, date accessed, role
-(input / calibration target).]</p>
+<p>All inputs are free, public, primary data. Third-party estimates are used for calibration only;
+their figures are not reproduced or redistributed here.</p>
+<div class="scroll">
+<table>
+  <thead><tr><th>Series</th><th>Source</th></tr></thead>
+  <tbody>
+    <tr><td>Debt securities outstanding</td><td>BIS Debt Securities Statistics (quarterly)</td></tr>
+    <tr><td>Equity</td><td>World Bank WDI <code>CM.MKT.LCAP.CD</code>, rolled forward on MSCI ACWI ETF prices</td></tr>
+    <tr><td>Central-bank holdings</td><td>Federal Reserve H.4.1 (via FRED); ECB Data Portal (securities held for monetary policy purposes); Bank of Japan accounts</td></tr>
+    <tr><td>Gold</td><td>World Gold Council above-ground stock; LBMA price</td></tr>
+    <tr><td>Inflation-linked</td><td>U.S. Treasury MSPD; Italy MEF (the set of measured countries is expanded at each revision)</td></tr>
+    <tr><td>Investability</td><td>BIS Triennial Survey; BIS International Debt Securities statistics</td></tr>
+  </tbody>
+</table>
+</div>
+<p>Every retrieval is recorded in a manifest with its URL, UTC timestamp and SHA-256; failed
+retrievals are recorded as evidence too. <strong>That the entire process can be reproduced by a
+single re-run script is a condition of the index's validity</strong>, not an optional extra.</p>
 
-<h2>3. Estimation engine (E0&ndash;E3)</h2>
-<p class="tbd">[TBD: E0 through E3, each with inputs, transformation, and output. Two earlier
-generations were discarded; both are documented here rather than omitted.]</p>
+<h2>3. How the estimation engine was built &mdash; four generations, two rejected</h2>
+<p>We disclose the engine's full history, including the two generations that failed and the one
+that passed its gates but was still not adopted.</p>
 
-<h2>4. Calibration (A1&ndash;A9)</h2>
-<p class="tbd">[TBD: the nine calibration steps, each stating target, tolerance, and outcome.]</p>
+<h3>v0 &mdash; rejected</h3>
+<p>The bond block overshot the external calibration corridor by <strong>+12.92 percentage
+points</strong>. Root cause: no investability filter, with onshore Chinese bonds (USD 28.7tn) the
+single largest contributor. This failure produced three design decisions: listed instruments only,
+an in-house investability filter, and per-market eligibility ratios.</p>
 
-<h2>5. Hold-out validation (H1, H2)</h2>
-<p class="tbd">[TBD: the two hold-out tests, specified in advance, with results as obtained.]</p>
+<h3>v1 &mdash; rejected</h3>
+<p>The equity block overshot in the opposite direction by <strong>+11.65pt</strong>, from
+over-filtering. The divergence decomposed completely into four design choices plus private assets
+present in the benchmark &mdash; which exposed a category error in the gate itself: it was
+comparing universes that were not like for like.</p>
+
+<h3>v2 &mdash; passed its gates, not adopted</h3>
+<p>Cleared the revised gates 3/3 (maximum deviation 0.46pt), but was <strong>not adopted</strong>
+because parameter A9 remained uncalibrated; under the pre-registered rules, that conflict is
+resolved against adoption. The precedent this sets is the point:
+<em>passing the gate is not sufficient, and an uncalibrated parameter blocks adoption.</em></p>
+
+<h3>v3, first stage &mdash; methodology frozen</h3>
+<p>A9&prime; (investor-holdings ratio, 0.9709) was calibrated, A4 was replaced with country-level
+aggregation, and A3 calibration failed. Gates 3/3 (&minus;4.36 / +5.36 / &minus;0.89). Under the
+pre-registered termination rule the engine was <strong>not adopted for weight publication; the
+methodology alone was frozen and published</strong> (frozen 2026-08-27T08:35:21Z, 14 files).</p>
+
+<p>A structural implication we disclose rather than hide: external estimates of the global market
+portfolio disagree widely &mdash; equity shares from 36% to 50% &mdash; and our own v0 and v1
+missed the same primary data by roughly &plusmn;12pt in opposite directions.
+<strong>Convergence is a function of filter calibration, not an approach to truth.</strong> What is
+offered here is the disclosed procedure, not a claim of uniqueness.</p>
+
+<h2>4. Parameters and calibration</h2>
+<div class="scroll">
+<table>
+  <thead><tr><th>Parameter</th><th>Point</th><th>Range</th><th>Status</th><th>Source</th></tr></thead>
+  <tbody>
+    <tr><td>A1 &mdash; free-float and investability scalar</td><td class="num">0.7365</td>
+        <td class="num">[0.697, 0.776]</td><td>Calibrated</td>
+        <td>MSCI ACWI IMI factsheet, two dates &divide; World Bank market capitalisation</td></tr>
+    <tr><td>A2 &mdash; scope of gold</td><td>bars, coins, ETFs + official sector</td>
+        <td>3 definitions</td><td>Definitional choice</td><td>WGC categories</td></tr>
+    <tr><td>A3 &mdash; high-yield ratio</td><td class="num">0.10</td><td class="num">[0.07, 0.14]</td>
+        <td><strong>Uncalibrated</strong></td>
+        <td>Unobtainable through every free route (amendment procedure No. 1)</td></tr>
+    <tr><td>A9&prime; &mdash; investor-holdings ratio</td><td class="num">0.9709</td>
+        <td class="num">[0.85, 1.00]</td><td>Calibrated</td>
+        <td>ECBC Covered Bond Fact Book 2025 (conservative end taken as the point)</td></tr>
+    <tr><td>Inflation-linked, developed markets</td><td class="num">USD 4.171tn</td>
+        <td class="num">[4.088, 5.010]</td><td>Calibrated</td>
+        <td>U.S. and Italian measurements + residual from measured ratios</td></tr>
+  </tbody>
+</table>
+</div>
+<p><strong>A1 carries a caveat.</strong> The scalar combines a free-float adjustment with MSCI's
+investability screens; it is not a pure free-float ratio. Its calibration rests on a single vendor
+at two dates, and a second-vendor anchor is re-attempted at each revision.</p>
+
+<h3>A3 remains uncalibrated, and we did not fill the gap with an estimate</h3>
+<p>Every free route to a rating-level split of outstanding balances failed: direct SIFMA workbook
+URLs returned HTTP errors, the SIFMA statistics page generates its data links in JavaScript so they
+are absent from the static HTML, and the workbook that was obtained reports corporates as a single
+figure with no rating breakdown. Amendment procedure No. 1 authorised manual retrieval as a
+legitimate route; the document obtained that way reported <em>issuance</em>, not
+<em>outstanding balances</em>, so the calibration did not hold. <strong>Usable anchors: zero.
+The parameter stays uncalibrated and no estimate was manufactured.</strong></p>
+<p>One piece of supporting evidence was gained, and it is not a calibration. On an issuance basis
+the high-yield ratio is 0.1625; under a steady-state approximation with weighted-average lives of
+5&ndash;7 years for high yield and 10&ndash;12 for investment grade, that implies A3 between 0.075
+and 0.120, with the registered point of 0.10 near the centre. This does not change the calibration
+flag, because the life ratio is itself unmeasured &mdash; it substitutes one uncalibrated parameter
+for another.</p>
+<p>A procedural finding was recorded at the same time: <strong>the gate is invariant to A3 by
+construction.</strong> Its three buckets are equity, bonds and gold, and bonds contains both IG and
+high yield, so A3 only moves allocation between them. Swept across its full range, and across the
+issuance-based 0.1625, the movement in the three buckets is 0.000000pt and the gate reads 3/3
+identically. A gate re-run therefore carries no decision information for parameters that stay
+inside a bucket.</p>
+
+<h2>5. Out-of-sample hold-outs</h2>
+<p>The frozen methodology was tested against two year-vintages never referenced during
+development.</p>
+<div class="scroll">
+<table>
+  <thead><tr><th>Hold-out</th><th>Three major blocks</th><th>Direction of change</th><th>Rating</th></tr></thead>
+  <tbody>
+    <tr><td>H1 &mdash; 2025 vintage</td><td class="num">&minus;5.09 / +5.56 / &minus;0.47</td>
+        <td>3/3 correct</td><td>Quasi-clean</td></tr>
+    <tr><td>H2 &mdash; 2024 vintage</td><td class="num">&minus;4.94 / +5.58 / &minus;0.63</td>
+        <td>3/3 correct</td><td>Clean, with noted exceptions</td></tr>
+  </tbody>
+</table>
+</div>
+<p><strong>The honest reading:</strong> these are six correlated binary outcomes. What is claimed
+is that the frozen methodology survived two unseen years &mdash; not statistical power.</p>
+<p><strong>Why the ratings differ.</strong> During the 2025 exercise the supervisor was
+inadvertently exposed to reference values, a procedure-design error that was caught and contained
+by recusal and machine-only scoring; the vintage was downgraded to quasi-clean as a result. The
+2024 exercise was run with the implementer blind and the supervisor unexposed until scoring, with
+two disclosed exceptions &mdash; a connection module outside the frozen build, and a three-month
+as-of-date misalignment &mdash; both of which bias against the engine. Full governance records are
+kept in the verification ledger (<a href="ledger.html">in preparation</a>).</p>
 
 <h2>6. Relation to prior work</h2>
-<p class="tbd">[TBD: Doeswijk, Lam &amp; Swinkels, "The Global Multi-Asset Market Portfolio,
-1959&ndash;2012" (Financial Analysts Journal, 2014) is the direct antecedent of the 50-year weight
-history published here. State what is taken from it, what differs, and how the two series compare
-where they overlap.]</p>
+<p>Doeswijk, Lam and Swinkels, &ldquo;The Global Multi-Asset Market Portfolio,
+1959&ndash;2012&rdquo; (<em>Financial Analysts Journal</em>, 2014), is the direct antecedent of the
+fifty-year weight history published here, and we name it as such. Their construction and ours differ
+in scope, in the investability adjustment, and in the treatment of central-bank holdings.</p>
+<p>A like-for-like comparison of the two series over their overlapping period requires more space
+and more care than this page allows, and it is the proper subject of the accompanying papers rather
+than a summary here. It will be set out in full there.</p>
 
 <h2>7. Use of AI tools</h2>
 <p>AI tools are used throughout this project: in literature search, in specifying and
@@ -69,28 +218,91 @@ for what is published. What guards against error is not the absence of AI but re
 the inputs are public, the method above is documented in full, and every correction stays
 visible in the revision history.</p>
 
-<h2>8. Limitations</h2>
-<p>Ten limitations are disclosed. They are not caveats appended to a result; they define the
-boundary within which any figure on this site may be read.</p>
+<h2>8. Known limitations</h2>
+<p>Ten limitations are disclosed and attached to every publication. They are not caveats appended
+to a result; they define the boundary within which any figure on this site may be read.</p>
 <ol>
-  <li class="tbd">[TBD: limitation 1]</li>
-  <li class="tbd">[TBD: limitation 2]</li>
-  <li class="tbd">[TBD: limitation 3]</li>
-  <li class="tbd">[TBD: limitation 4]</li>
-  <li class="tbd">[TBD: limitation 5]</li>
-  <li class="tbd">[TBD: limitation 6]</li>
-  <li class="tbd">[TBD: limitation 7]</li>
-  <li class="tbd">[TBD: limitation 8]</li>
-  <li class="tbd">[TBD: limitation 9]</li>
-  <li class="tbd">[TBD: limitation 10]</li>
+  <li>The true world market portfolio is unobservable. This index does not theoretically guarantee
+      that it will not fall short of the market average (Roll's critique).</li>
+  <li>Major institutions' estimates of the investable GMP diverge from one another (equity shares
+      of 36&ndash;50%, for instance), and the choice of estimate can move long-run returns by
+      roughly one percentage point a year. Our response is consistent application of our own
+      rulebook and publication of the estimate range.</li>
+  <li>The index is confined to the listed, investable universe and excludes the majority of the
+      true GMP (housing, unlisted businesses, and similar).</li>
+  <li>The IG/HY split is an auxiliary estimate and is uncalibrated (roughly &plusmn;0.6pt of
+      uncertainty). Official figures are published on the combined credit sleeve. A rating-level
+      split of outstanding balances has been confirmed not to exist in free public primary data
+      (2026-08-27).</li>
+  <li>A1 is calibrated against a single vendor; equity scale inherits MSCI's investability screens
+      through one scalar.</li>
+  <li>BIS statistics cover only 53 countries (India, Saudi Arabia and Taiwan are among those
+      missing), biasing the bond block toward underestimation. Central-bank holdings of the Bank of
+      England, the People's Bank of China and others are not deducted.</li>
+  <li>Nine jurisdictions of indeterminate status are included fail-open; Argentina, among them, is
+      known to maintain capital controls. A fail-closed variant is published alongside.</li>
+  <li>Emerging asset classes (crypto-assets and similar) are not captured; the birth and growth of
+      a new asset cannot be reflected before it is included.</li>
+  <li>Reference dates are not perfectly aligned across series (BIS balances lag by up to one
+      quarter).</li>
+  <li>Any fund implementation would certainly fall short of this index by the amount of management
+      fees and transaction costs, and preservation of real purchasing power is not guaranteed. In
+      our 1968&ndash;82 examination, even world-portfolio-type allocations delivered close to zero
+      real returns, with real drawdowns exceeding 30%.</li>
 </ol>
 
-<h2 id="versions">9. Version history</h2>
+<h2>9. Implementation requirements</h2>
+<p>The rulebook contains a section of implementation requirements for tracking products
+(&sect;11). No such product exists or is offered; the section is retained in the rulebook for
+completeness and is under amendment procedure No. 2.</p>
+
+<h2>10. Verification programme</h2>
+<p>A summary of the tests behind the figures. The full record, including governance events, is the
+<a href="ledger.html">Verification Ledger</a>.</p>
+<div class="scroll">
+<table>
+  <thead><tr><th>ID</th><th>Test</th><th>Headline result</th></tr></thead>
+  <tbody>
+    <tr><td>B1</td><td>Annual-approximation backtest (2006&ndash;25)</td>
+        <td>Superseded by B2; recorded as a model-risk case</td></tr>
+    <tr><td>B2</td><td>Monthly ETF data, fixed weights (2008&ndash;26)</td>
+        <td>Fell short of 60/40 (Sharpe 0.448 vs 0.525); no basis for performance claims</td></tr>
+    <tr><td>B3</td><td>Currency-effect-removed variant</td>
+        <td>Indistinguishable from 60/40; the observed currency effect was later
+            <strong>not confirmed</strong> by B6</td></tr>
+    <tr><td>B4</td><td>Float-weight variant</td>
+        <td>Buy-and-hold drifts equity from 47% to 66%; the improvement is equity beta</td></tr>
+    <tr><td>B5</td><td>Long-run regime test (1968&ndash;2026)</td>
+        <td>The account in which gold carried the 1970s is not reproducible in a then-feasible
+            form: private gold ownership was illegal in the United States until 1975</td></tr>
+    <tr><td>B6 / B6.1</td><td>Rulebook-compliant, vintage-consistent 50 years (1976&ndash;2026)</td>
+        <td>No performance advantage over 60/40; at equal risk +0.04pt/yr (p = 0.935); equivalence
+            within &plusmn;0.80pt/yr (90% CI; TOST p = 0.0177 at &plusmn;1.0pt bounds) after
+            central-bank deduction, which reached 27.5% of the developed-sovereign block at the
+            2022 QE peak</td></tr>
+    <tr><td>B7</td><td>Half-century four-portfolio comparison (608 months, USD)</td>
+        <td>All four diversified portfolios statistically indistinguishable; GMP&ndash;60/40
+            correlation 0.944. The choice among them is a choice of risk level, not of quality</td></tr>
+  </tbody>
+</table>
+</div>
+<p>All tests are non-blinded and exploratory except where noted; costs are ignored; multiple
+comparisons are uncorrected. <strong>Results unfavourable to our own hypotheses are reported with
+the same prominence as favourable ones.</strong></p>
+
+<h2 id="versions">11. Version history</h2>
 <div class="scroll">
 <table>
   <thead><tr><th>Version</th><th>Date</th><th>Change</th></tr></thead>
   <tbody>
-    <tr><td>v1.0</td><td>2026-09-01</td><td>First published edition of the protocol.</td></tr>
+    <tr><td>v1.0, 3rd revision</td><td>2026-08-28</td>
+        <td>Canonical notation adopted: calculated 8 / published 7, with IG and high yield merged
+            for official publication and the split retained as an uncalibrated auxiliary
+            estimate.</td></tr>
+    <tr><td>v1.0, amendment No. 1</td><td>2026-08-27</td>
+        <td>A3 calibration attempted through the manual-retrieval route and not established; the
+            parameter remains uncalibrated and the attempt is recorded.</td></tr>
+    <tr><td>v1.0</td><td>2026-08-27</td><td>Methodology frozen and published (14 files).</td></tr>
   </tbody>
 </table>
 </div>
