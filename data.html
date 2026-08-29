@@ -39,56 +39,90 @@ the project's papers.</p>
   <thead><tr><th>File</th><th>Format</th><th class="num">Size</th><th>SHA-256</th></tr></thead>
   <tbody>
     <tr>
-      <td class="tbd">[TBD: filename.csv]</td>
+      <td><code>weight_history_1976_2026.csv</code><br>
+          <span style="opacity:.7">Official publication &mdash; 7 sleeves</span></td>
       <td>CSV (UTF-8)</td>
-      <td class="num tbd">[TBD]</td>
-      <td class="hash tbd">[TBD]</td>
+      <td class="num">51 rows</td>
+      <td class="hash">e7cda85b33b2e51cad28d707243094a2996b39e12d99ebf207f88e412f919fcd</td>
     </tr>
     <tr>
-      <td class="tbd">[TBD: manifest.txt]</td>
-      <td>Text</td>
-      <td class="num tbd">[TBD]</td>
-      <td class="hash tbd">[TBD]</td>
+      <td><code>weight_history_1976_2026_auxiliary_8sleeve.csv</code><br>
+          <span style="opacity:.7">Auxiliary &mdash; IG/HY split, uncalibrated</span></td>
+      <td>CSV (UTF-8)</td>
+      <td class="num">51 rows</td>
+      <td class="hash">85494b61a0cbfd2d92b8bedc2ad92a60d3b984254ea18f51803a88622d5a1c9d</td>
+    </tr>
+    <tr>
+      <td><code>MANIFEST.json</code></td>
+      <td>JSON</td>
+      <td class="num">&mdash;</td>
+      <td class="hash">&mdash;</td>
     </tr>
   </tbody>
 </table>
 </div>
 <p>Verify a download with <code>shasum -a 256 &lt;file&gt;</code> and compare with the value above.</p>
 
+<h2>What the rows mean</h2>
+<p>Weights are annual, measured at each year-end from 1975 to 2025. A row dated
+<code>1975-12-31</code> is the reconstruction target for January 1976, which is why a
+1975&ndash;2025 measurement series produces a 1976&ndash;2026 portfolio history. Weights are
+percentages rounded to four decimal places; each row sums to exactly 100.0000, with the
+rounding residual absorbed by the largest sleeve.</p>
+<p>The official series publishes <strong>seven sleeves</strong>, with investment-grade credit
+and high yield combined. The auxiliary file splits them, but that split is a fixed ratio
+carried across every year rather than a year-by-year observation, and carries no time-series
+information. The same caution applies to the inflation-linked share.</p>
+
 <h2>Conditions of disclosure</h2>
 <p>Three constraints define what this series is. They are properties of the data itself, not
 caveats about its use, and any reading of the figures must take them as given.</p>
 <ol>
-  <li><strong>Securitisation is anchored to the v3 definition.</strong>
-      <span class="tbd">[TBD: one sentence stating what the v3 anchor fixes, and over what range it
-      holds.]</span></li>
+  <li><strong>Securitised debt is anchored to the frozen v3 calibration.</strong>
+      The securitised-debt sleeve uses the frozen v3 calibration values rather than being
+      re-estimated period by period.</li>
   <li><strong>High-yield and inflation-linked shares are held fixed.</strong>
-      <span class="tbd">[TBD: state the fixed shares and the period over which they are held
-      constant.]</span></li>
+      Within the bond sleeves, these shares are held at their fixed calibrated structure
+      across the full history.</li>
   <li><strong>Central bank holdings cover three institutions only.</strong>
-      <span class="tbd">[TBD: name the three, and state what is therefore excluded from the
-      investability adjustment.]</span></li>
+      Holdings of the Federal Reserve, the ECB, and the Bank of Japan are deducted; other
+      official-sector holdings are not netted out.</li>
 </ol>
+<p>Users who require different treatments should re-derive weights from the disclosed
+methodology rather than adjust these figures ad hoc.</p>
+
+<h2>What this is not</h2>
+<ul>
+  <li>Not investment advice, not a product, not a solicitation.</li>
+  <li>Not a claim of performance superiority over any benchmark. Over our 50-year verification
+      (1976&ndash;2026), the annualized return difference versus a 60/40 portfolio was within
+      &plusmn;0.80 percentage points at equal risk (90% confidence interval; equivalence not
+      superiority &mdash; TOST p = 0.0177 at &plusmn;1.0pt bounds).</li>
+  <li>All results are USD-denominated. No claims are made for other numeraires.</li>
+</ul>
 
 <h2>Persistent identifier</h2>
-<p>DOI: <span class="tbd">[TBD: Zenodo DOI]</span></p>
+<p>DOI: <a href="https://doi.org/10.5281/zenodo.22151403"><code>10.5281/zenodo.22151403</code></a> &mdash; version 1.0.0</p>
 <p>The dataset is deposited with Zenodo, which mints a version DOI for each release and a concept
 DOI that always resolves to the most recent. Cite the version you used.</p>
 
 <h2>Licence</h2>
-<p class="tbd">[TBD: licence. CC BY 4.0 is the usual choice for a dataset intended to be cited and
-reused; state it here and in the manifest.]</p>
+<p>The dataset is released under
+<a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Attribution is the only
+condition: retain the citation below, link to the DOI, and indicate if you modified the data.</p>
+<p>The build and verification scripts distributed alongside the data are released under the
+MIT License.</p>
 
 <h2>How to cite</h2>
 <pre>@misc{capitalcensus_weights_2026,
-  title     = {50-Year Weight History of the Investable Global Market
-               Portfolio (1976--2026)},
-  author    = {[TBD: author]},
+  title     = {Global Market Portfolio Weight History, 1976--2026},
+  author    = {Nakanishi, Keisuke},
   year      = {2026},
   publisher = {Zenodo},
-  doi       = {[TBD]},
+  doi       = {10.5281/zenodo.22151403},
   url       = {https://thecapitalcensus.github.io/data.html},
-  note      = {The Capital Census, Data Release D}
+  note      = {The Capital Census, Data Release D},
+  version   = {1.0.0}
 }</pre>
 
 <h2>Changelog</h2>
@@ -96,7 +130,7 @@ reused; state it here and in the manifest.]</p>
 <table>
   <thead><tr><th>Version</th><th>Date</th><th>Change</th><th>DOI</th></tr></thead>
   <tbody>
-    <tr><td>1.0.0</td><td>2026-09-01</td><td>First release.</td><td class="tbd">[TBD]</td></tr>
+    <tr><td>1.0.0</td><td>2026-09-01</td><td>First release.</td><td><code>10.5281/zenodo.22151403</code></td></tr>
   </tbody>
 </table>
 </div>
@@ -126,7 +160,7 @@ reused; state it here and in the manifest.]</p>
      not delete published results, including results unfavorable to our own prior claims.</p>
 
   <p style="margin-top:1.5rem">The Capital Census &middot;
-     <span class="tbd">[TBD: author line]</span></p>
+     Keisuke Nakanishi &middot; Independent Researcher &middot; <a href="https://orcid.org/0009-0000-3780-9450">ORCID 0009-0000-3780-9450</a></p>
 </footer>
 
 </body>
