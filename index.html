@@ -33,30 +33,71 @@ revision stays on the record &mdash; including results that ran against our own 
 </div>
 
 <h2>Capital Census Global Market Portfolio Index</h2>
-<p>Short form: <strong>CC-GMP Index</strong>. Released monthly. The first official release is dated
-<strong>September 1, 2026</strong>.</p>
+<p>Short form: <strong>CC-GMP Index</strong>. Published monthly. The index reports the composition
+and size of the investable global market portfolio; it is not a price index and has no level.</p>
 
+<!--MI:START-->
+<p>As of <strong>2026-08-31</strong> &middot; seven published sleeves &middot; total investable market value <strong>USD 242.57tn</strong></p>
 <div class="scroll">
 <table>
-  <thead>
-    <tr><th>Release</th><th>As of</th><th class="num">Index value</th><th>Release note</th></tr>
-  </thead>
+  <thead><tr><th>Sleeve</th><th class="num">Weight (%)</th><th class="num">Market value (USD tn)</th></tr></thead>
   <tbody>
-    <tr>
-      <td>No. 1</td>
-      <td>2026-09-01</td>
-      <td class="num tbd">[TBD]</td>
-      <td class="tbd">[TBD: link]</td>
-    </tr>
+    <tr><td>Global equity</td><td class="num">48.78</td><td class="num">118.34</td></tr>
+    <tr><td>DM government bonds</td><td class="num">18.41</td><td class="num">44.66</td></tr>
+    <tr><td>Credit</td><td class="num">15.65</td><td class="num">37.95</td></tr>
+    <tr><td>Securitised</td><td class="num">6.13</td><td class="num">14.86</td></tr>
+    <tr><td>EM debt</td><td class="num">3.78</td><td class="num">9.17</td></tr>
+    <tr><td>Inflation-linked</td><td class="num">1.77</td><td class="num">4.28</td></tr>
+    <tr><td>Gold</td><td class="num">5.49</td><td class="num">13.31</td></tr>
+    <tr><td><strong>Total</strong></td><td class="num"><strong>100.00</strong></td><td class="num"><strong>242.57</strong></td></tr>
   </tbody>
 </table>
 </div>
-
-<div class="box">
-  <strong>Release note &mdash; No. 1</strong>
-  <p class="tbd" style="margin-bottom:0">[TBD: what was computed this month, what was re-examined,
-  and what remains open. Non-confirmations belong here as much as confirmations.]</p>
+<p>Investment-grade credit and high yield are published as a single credit sleeve. The split is available as a labelled auxiliary estimate (IG 14.08%, HY 1.56%, on an uncalibrated A3 of 0.1) and must not be read as a measurement &mdash; see <a href="methodology.html">Methodology &sect;4</a>.</p>
+<h3>Reference dates and publication lags</h3>
+<div class="scroll">
+<table>
+  <thead><tr><th>Input</th><th>Reference date used</th><th class="num">Lag (months)</th></tr></thead>
+  <tbody>
+    <tr><td>Debt securities (BIS DSS)</td><td>2025-12-31</td><td class="num">8.0</td></tr>
+    <tr><td>Equity market capitalisation (World Bank)</td><td>2025</td><td class="num">8.0</td></tr>
+    <tr><td>Bank of Japan holdings</td><td>2026-03-31</td><td class="num">5.0</td></tr>
+    <tr><td>Federal Reserve holdings</td><td>2026-08-19</td><td class="num">&mdash;</td></tr>
+    <tr><td>ECB holdings</td><td>2026-W34</td><td class="num">&mdash;</td></tr>
+    <tr><td>Gold price (LBMA)</td><td>2026-08-26</td><td class="num">&mdash;</td></tr>
+    <tr><td>Equity roll-forward (ACWI)</td><td>2025-12-31→2026-08-26</td><td class="num">&mdash;</td></tr>
+  </tbody>
+</table>
 </div>
+<p>The quantity layer steps at its own natural frequency; each issue states the lag rather than smoothing it away. Published figures are never revised retrospectively &mdash; a correction appears as a new issue with its own note.</p>
+<!--MI:END-->
+
+<h2>Release note &mdash; No. 1</h2>
+<p><strong>This is the first official issue.</strong> It publishes seven sleeves. The rulebook
+calculates eight: investment-grade credit and high yield are reported here as one combined credit
+sleeve, because the parameter that separates them (A3) is uncalibrated and every free route to
+calibrating it has failed. Publishing the split as a measurement would claim a precision the data
+does not support, so it is carried as a labelled auxiliary estimate instead.</p>
+
+<p><strong>Nothing has been revised this month, because there is nothing prior to revise.</strong>
+From the next issue onward this note will state what changed, what was re-examined, and what did
+not confirm what we expected &mdash; on the same terms as results that did.</p>
+
+<p><strong>What remains unresolved, stated here rather than in a footnote.</strong> A3 is
+uncalibrated: no rating-level split of outstanding balances exists in free primary data, and the
+attempt record is published in
+<a href="methodology.html">Methodology &sect;4</a>. Central-bank holdings are deducted for three
+institutions only &mdash; the Federal Reserve, the ECB and the Bank of Japan &mdash; so holdings of
+the Bank of England, the People's Bank of China and others remain inside the figures. BIS statistics
+cover 53 countries, which biases the bond block toward underestimation. The full list is the
+<a href="methodology.html">ten disclosed limitations</a>, and they should be read before any figure
+here is used.</p>
+
+<p>The estimation engine behind these figures was <strong>not adopted</strong> for weight
+publication on its own terms; what was frozen and published first was the methodology. Seven-sleeve
+publication was authorised separately by the third revision of the rulebook. That sequence &mdash;
+methodology first, figures second, and only in the form the calibration actually supports &mdash; is
+the intended one.</p>
 
 <h2>What is disclosed</h2>
 <p>All rules, calibrations, and known limitations are disclosed in full, including results
