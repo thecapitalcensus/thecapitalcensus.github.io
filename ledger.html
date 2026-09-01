@@ -30,6 +30,7 @@ work is actually carried out, including the use of AI tools, is set out in
 <a href="methodology.html#ai">Methodology &sect;7</a>.</p>
 
 <h2>Part 1 &mdash; Tests</h2>
+<p><strong>Note applying to all tests.</strong> No management fees, transaction costs, taxes or implementation frictions are deducted in any backtest in this ledger (B1&ndash;B7 and their revisions). The portfolios compared differ in turnover and in the breadth of instruments required, so the effect of costs is not neutral; its expected direction is against the GMP. All bounds reported here are bounds on gross returns.</p>
 <div class="scroll">
 <table>
   <thead><tr><th>ID</th><th>Test</th><th>Headline result</th><th>Consequence</th></tr></thead>
@@ -88,10 +89,10 @@ work is actually carried out, including the use of AI tools, is set out in
             months)</td>
         <td>First test of the rulebook specification. Versus 60/40: return &minus;1.18pt/yr
             (p = 0.040), Sharpe +0.004 (p = 0.919); at equal volatility +0.04pt/yr (p = 0.935).
-            Twenty-year-window advantage: 0.8%. Equivalence within &plusmn;1.0pt/yr established
-            (TOST p = 0.012). High-inflation Sharpe 0.073 (fifth of six strategies). B3's currency
-            effect <strong>not confirmed</strong> (one fourteenth the size, significance gone; in
-            JPY terms 2021&ndash;22 it was &minus;6.30pt/yr, p = 0.030). Non-blinded, not
+            Twenty-year-window advantage: 0.8%. At equal volatility the 90% confidence interval for
+            the difference is within &plusmn;0.75pt/yr (exact 0.7423; an interval estimate,
+            independent of any equivalence margin). High-inflation Sharpe 0.073 (fifth of six strategies). B3's currency
+            effect <strong>not confirmed</strong> (one fourteenth the size, significance gone). Non-blinded, not
             pre-registered</td>
         <td>Propositions 8&ndash;12 adopted; rulebook &sect;11 amendment procedure opened</td></tr>
     <tr><td>B6.1</td><td>B6 with central-bank deduction and time-consistent sub-splits (directional
@@ -104,7 +105,7 @@ work is actually carried out, including the use of AI tools, is set out in
             &plusmn;1.0pt, p = 0.0177). Sub-split time variation moves weights by up to 4.2pt with
             zero contribution to performance. Unfavourable results reported: inflation beta
             persists at 0.769 (from 0.814; 60/40: 0.572), and the equivalence bound worsened from
-            &plusmn;0.74 to &plusmn;0.80pt. Non-blinded, directional registration only</td>
+            &plusmn;0.75 to &plusmn;0.81pt (exact 0.7423 &rarr; 0.8041). Non-blinded, directional registration only</td>
         <td>B6 limitation 1 resolved, limitation 2 partially; proposition 11 updated; the
             fifty-year weight history promoted to publication candidate</td></tr>
     <tr><td>B7</td><td>Half-century four-portfolio comparison (1976&ndash;2026.8, 608 months, USD):
@@ -115,7 +116,7 @@ work is actually carried out, including the use of AI tools, is set out in
             +0.56pt/yr even in a decade when gold rose 335%, dwarfed by the equity underweight's
             &minus;2.52pt. Ten-year real-return windows positive 100% of the time (worst +0.08%)
             &mdash; but the same holds for 60/40. Rank stability favours the one-third allocation.
-            Non-blinded, exploratory; costs ignored; single path; multiple comparisons
+            Non-blinded, exploratory; single path; multiple comparisons
             uncorrected</td>
         <td>Propositions 13&ndash;15 adopted; prohibited claim 9 added</td></tr>
   </tbody>
@@ -125,7 +126,7 @@ work is actually carried out, including the use of AI tools, is set out in
 <h2>Part 2 &mdash; Adopted propositions</h2>
 <ol>
   <li><strong>The investable GMP has no performance advantage over 60/40.</strong> Fixed weights
-      fall short; the variant specifications are equivalent. Eighteen years, 219 months, all
+      fall short; the variant specifications are indistinguishable. Eighteen years, 219 months, all
       regimes: zero evidence of superiority.</li>
   <li><strong>Currency exposure on the bond side is a variable to be chosen deliberately.</strong>
       In the high-inflation, strong-dollar regime it was worth +0.215%/month (p = 0.0075),
@@ -159,12 +160,17 @@ work is actually carried out, including the use of AI tools, is set out in
   <li><strong>Following market capitalisation structurally includes buying high (B6).</strong> In
       January 1980 the rules held 12.9% gold; in January 1990, 35.6% equities. Not a defect but a
       definition &mdash; and one that must be disclosed.</li>
-  <li><strong>&ldquo;Neither wins nor loses&rdquo; can only be asserted through an equivalence test
-      (B6, updated by B6.1).</strong> 90% confidence interval &plusmn;0.80pt/yr; TOST p = 0.0177 at
-      &plusmn;1.0pt bounds. &ldquo;The difference is zero&rdquo; can never be claimed from any
-      sample. Note the asymmetry: the central-bank correction <em>improved</em> returns, which moved
-      the point estimate away from zero and <em>worsened</em> the bound from &plusmn;0.74 to
-      &plusmn;0.80pt. Corrections do not necessarily strengthen one's claims.</li>
+  <li><strong>&ldquo;Neither wins nor loses&rdquo; can only be asserted as a bound, never as an
+      identity (B6, updated by B6.1).</strong> What the data support is: at 90% confidence the
+      annualized equal-risk difference versus 60/40 lies within &plusmn;0.88pt/yr &mdash; the least
+      favourable of the three benchmark definitions examined (base definition &plusmn;0.81pt; US
+      Treasuries only &plusmn;0.83pt; local-currency bonds &plusmn;0.88pt). We no longer report
+      p-values against an equivalence margin of our own choosing (amendment 5): an interval estimate
+      is dual to the family of TOST outcomes at every margin at once, so reporting the interval
+      removes the freedom to select one. &ldquo;The difference is zero&rdquo; can never be claimed
+      from any sample. Note the asymmetry: the central-bank correction <em>improved</em> returns,
+      which moved the point estimate away from zero and <em>worsened</em> the bound from
+      &plusmn;0.75 to &plusmn;0.81pt. Corrections do not necessarily strengthen one's claims.</li>
   <li><strong>Regime neutrality distinguishes the GMP from single-asset concentration, but not from
       60/40 or equal weights (B6).</strong> The differentiator is provenance &mdash; the aggregate
       holdings of all investors &mdash; not outcomes. Its high-inflation risk-adjusted rank was
@@ -240,6 +246,96 @@ protocol.</p>
 conflicted with the inventory definition in use, and the deviation was approved as a correction of
 a flawed instruction. Instructions are also subject to audit.</p>
 
+<h3>An amendment that failed on its own terms</h3>
+<p>Amendment 1 sought to calibrate the high-yield share using a manually obtained industry workbook,
+after automated retrieval had been blocked. The workbook turned out to report issuance &mdash; a
+flow &mdash; where the parameter needs amounts outstanding, a stock. The gates passed 3/3 and the
+machine judgment nonetheless returned adopt = false, because the parameter remained uncalibrated.
+That is the second occasion on which a registered rule cost us something. The episode also exposed
+a structural fact: the three top-level gate buckets are invariant, by construction, to any
+parameter that only moves allocation <em>within</em> a bucket. Whether a proposed parameter crosses
+a bucket boundary must now be classified in advance.</p>
+
+<h3>A proposal we could not claim was disinterested</h3>
+<p>Amendment 3 moved official publication to the granularity at which the underlying statistics
+actually measure &mdash; seven sleeves, with the investment-grade and high-yield split demoted to an
+auxiliary, uncalibrated estimate. We record without qualification that the proposal was made after
+the calibration route was known to be closed, and is therefore inseparable from a motive to avoid
+an inconvenient obligation. It was adopted on primary evidence instead: the international debt
+statistics carry no rating dimension, and the industry body does not publish the split &mdash; both
+confirmed independently, after the proposal was made.</p>
+
+<h3>Two copies of the truth</h3>
+<p>A discrepancy over whether the index has seven or eight sleeves was reported by the principal.
+The cause was not a typo. Amendments processed on the drafting side had never been transferred to
+the code repository, and the two sides had been diverging document by document. A separate defect
+surfaced in the same investigation: an unlabelled artefact file from the ten-sleeve v0 era was still
+in circulation. Resolution: a single canonical repository, an auto-generated manifest that detects
+documents it has not received, a sleeve history generated from the actual files, and the canonical
+phrasing &ldquo;eight computed, seven published&rdquo;. Lesson: a document set without a defined
+original will diverge, and no one will be able to say which copy is wrong.</p>
+
+<h3>Choosing the margin after seeing the answer</h3>
+<p>Our equivalence claim was originally stated against a fixed margin of &plusmn;1.0pt per year. The
+script that produced it did not hold a single margin: it looped over a grid of 0.5, 1.0, 1.5 and 2.0,
+and the value carried into this ledger was the smallest grid point that passed. The next smaller
+point failed. No margin had been registered before the test, and no economic rationale for 1.0pt was
+recorded anywhere in our documents or code. The second run inherited the margin unchanged, so the
+selection happened once and was not repeated &mdash; which limits the damage without excusing it.
+We withdrew the margin-dependent p-values and replaced them with the interval, which does not depend
+on a margin at all (amendment 5). Lesson adopted: <em>a test threshold is a parameter, and
+pre-registration must cover it.</em> Reported by the principal.</p>
+
+<h3>Generalising a result from a window it was not measured on</h3>
+<p>A draft of our paper stated, as a general fact, that the sign of the difference reverses when the
+benchmark's bond leg is restricted to US Treasuries. That reversal had been observed on B2 &mdash; a
+shorter window with fixed weights and a different design &mdash; and had never been tested on the
+fifty-year window. We attributed it correctly, pre-registered a sensitivity run with a hash
+committed before execution, and carried it out (amendment 6). The reversal was confirmed on the full
+window; none of the three variants produces a difference distinguishable from zero, each point
+estimate being under a quarter of its own standard error. Lesson: a result belongs to the window it
+was measured on. What can be said is that the sign carries no information, not that either sign is
+right. Reported by the principal.</p>
+
+<h3>A bound we rounded in our own favour</h3>
+<p>The sensitivity run turned up something we had not been looking for. The bound we had been
+publishing as &ldquo;within &plusmn;0.80pt&rdquo; has an exact value of 0.8041; the stated figure
+was rounded <em>down</em>, and downward is the direction that flatters us. The same phrasing also
+quoted the most favourable of the three benchmark definitions without saying so. Both were corrected
+(amendment 7): the public figure is now &plusmn;0.88pt, the least favourable of the three, and a
+rounding rule was added &mdash; every bound in public material is rounded up, never down. Found by
+the implementer's own check.</p>
+
+<h3>A rule that was recorded but not binding</h3>
+<p>After the margin episode we wrote the lesson into this ledger and considered the matter closed.
+It was not: the rulebook's pre-registration clause still said only that criteria must be fixed
+before execution, without saying which criteria. The gap that produced the original failure was
+still open in the document that actually binds us. The clause now enumerates four mandatory items
+&mdash; significance level, equivalence margin, window length, and lag-selection rule &mdash; and
+prohibits promoting a grid-searched value to an adopted one (amendment 8). Lesson: <em>a lesson
+belongs in the rulebook, not in a footnote; footnotes do not bind.</em> Reported by the principal,
+as a requirement of the paper.</p>
+
+<h3>The published page and the original disagreed</h3>
+<p>A decision taken on 28 August &mdash; that JPY-denominated re-runs and one further comparison
+were out of scope &mdash; had been applied to this page but never written back into the internal
+ledger, which still carried both as open items. The public copy was ahead of the original. We
+resolved it in favour of this page and corrected the original (amendment 9), and added a stated
+criterion for what belongs in the public list, so that an omission can be told apart from an
+oversight. Lesson: <em>a decision goes into the original first.</em> If the published copy leads,
+no one can tell whether the original is stale or the publication is wrong.</p>
+
+<h3>A retired scope that kept reappearing &mdash; and the check we should have had</h3>
+<p>Four days after JPY denomination was placed out of scope, three statements assuming it were still
+alive in the internal ledger: a JPY figure in the B6 row, an open registration for a JPY run, and a
+proposition conditioned on a JPY verification that will now never happen. All three were removed
+(amendment 10). The pattern across the six events above is a single one. Our numbers are protected
+by hashes, manifests, frozen files and confirmed-value files; our prose was protected by memory
+alone, and the same fact was copied by hand into six documents. We now run a document linter that
+detects retired terminology, superseded figures and withdrawn concepts across every current
+document, and a document is not current until it passes. Lesson: <em>if a decision is enforced by
+remembering it, it will survive in the places no one thought to look.</em></p>
+
 <h2>Part 4 &mdash; Contamination map</h2>
 <p>External reference estimates (used for calibration and hold-out scoring; values not republished
 here) are denoted by vintage year.</p>
@@ -284,10 +380,12 @@ prohibitions, not as claims.</p>
   <p>&ldquo;All rules, calibrations, and known limitations are disclosed in full, including results
   unfavorable to our own hypotheses.&rdquo;</p>
   <p>&ldquo;Cost minimization is the only improvement that works with certainty.&rdquo;</p>
-  <p style="margin-bottom:0">&ldquo;Over our 50-year verification (1976&ndash;2026), the annualized
-  return difference versus a 60/40 portfolio was within &plusmn;0.80 percentage points at equal risk
-  (90% confidence interval; equivalence not superiority &mdash; TOST p = 0.0177 at &plusmn;1.0pt
-  bounds).&rdquo;</p>
+  <p style="margin-bottom:0">&ldquo;Over our 50-year verification (1976&ndash;2026, 606 months, USD, gross of all
+  costs), the annualized return difference versus a 60/40 portfolio was within &plusmn;0.88
+  percentage points at equal risk (90% confidence interval). This is the least favourable of the
+  three 60/40 bond-leg definitions we examined.&rdquo;</p>
+  <p style="margin-bottom:0"><strong>Rounding rule.</strong> Every bound used in public material is
+  rounded up, never down. Rounding down is the direction that favours us and is prohibited.</p>
 </div>
 <p>The full standards, including phrase-level examples of what each prohibition rules out, are
 maintained as an internal document and applied to every page before publication.</p>
@@ -306,6 +404,8 @@ maintained as an internal document and applied to every page before publication.
   <li>Second-vendor anchor for A1</li>
   <li>Central-bank deduction beyond the three institutions</li>
   <li>Countries not covered by BIS statistics</li>
+  <li>Publication of the fifty-year weight history (B6.1 basis, with disclosure that the securitised level is anchored on the v3 estimate)</li>
+  <li>Calibration of the high-yield share: the industry route is confirmed closed (amounts outstanding are not published by rating); only a vendor factsheet route remains, and it is low priority since amendment 3</li>
   <li>A fully date-matched 2024 vintage (optional)</li>
 </ul>
 
@@ -332,6 +432,7 @@ maintained as an internal document and applied to every page before publication.
   <h2>Corrections policy</h2>
   <p>Corrections are made openly. Superseded figures remain visible in the revision history. We do
      not delete published results, including results unfavorable to our own prior claims.</p>
+  <p style="margin-bottom:0"><strong>Withdrawal notice (1 September 2026).</strong> One figure previously shown in the B6 row &mdash; a JPY-denominated result for 2021&ndash;22 &mdash; has been withdrawn from this page. It was not withdrawn because it was unfavourable: it is withdrawn because all results we publish are USD-denominated and we make no claims for any other numeraire (amendment 9). The figure remains in the internal verification ledger and is available on request.</p>
 
   <p style="margin-top:1.5rem">The Capital Census &middot;
      Keisuke Nakanishi &middot; Independent Researcher &middot; <a href="https://orcid.org/0009-0000-3780-9450">ORCID 0009-0000-3780-9450</a></p>
