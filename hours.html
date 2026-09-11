@@ -1,0 +1,1042 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Measuring Assets in Hours of the World&rsquo;s Work &middot; The Capital Census</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site">
+  <a class="wordmark" href="index.html">The Capital Census</a>
+  <nav>
+    <a href="index.html">Monthly Index</a>
+    <a href="methodology.html">Methodology</a>
+    <a href="ledger.html">Verification Ledger</a>
+    <a href="data.html">Data</a>
+    <a href="hours.html" aria-current="page">World Hour</a>
+  </nav>
+</header>
+
+<h1>Measuring Assets in Hours of the World&rsquo;s Work</h1>
+<p class="lede">A labour-time numeraire from public data. Research note, draft v1.2, 11 September 2026. Keisuke Nakanishi.</p>
+
+<div class="box">
+  <p style="margin:0">All series on this page are the author&rsquo;s own calculations from free public data
+  (FRED, BIS, OECD, World Bank, Penn World Table, LBMA, market prices); no third-party proprietary data
+  is redistributed, and no tables or figures from other publications are reproduced. Generative AI tools
+  (Claude, Anthropic) were used for drafting, editorial review and writing analysis code, and as a
+  discussion partner in analysis design. The author specified the methods, reviewed and ran all code,
+  verified the outputs against source data, and is responsible for all results.
+  PDF and SSRN identifier: <span class="tbd">[TBD]</span>.</p>
+</div>
+
+<h2 id="summary">Summary</h2>
+<p>Every asset price is a ratio: something over a unit. The unit is
+almost always a currency, and every currency loses value against the
+things people ultimately want. This note proposes and tests a different
+unit — <strong>nominal GDP per hour worked, aggregated across countries
+at GDP weights</strong>, referred to here as the <em>world hour</em> —
+and re-measures a half-century of asset prices in it.</p>
+<p>Four results follow.</p>
+<ol type="1">
+<li><strong>The world hour behaves like the other non-gold units and
+differs from them in what it leaves out.</strong> Against a GDP-weighted
+currency basket, consumer prices, manufacturing wages and broad money
+per person, its volatility in USD terms sits in the same band (3.4–4.5%
+a year) and is not notably low within it; gold is four times noisier
+than any of them. Its drift (5.7% a year over 1968–2026) lies between
+consumer prices and money. It is not free of prices, exchange rates or
+politics. What it is free of is two things the other units carry — the
+<em>distribution</em> of income between labour and capital, and
+<em>asset-market expectations</em> — and that, not a variance statistic,
+is the case for it.</li>
+<li><strong>Dividing by GDP and dividing by GDP per hour are different
+questions.</strong> Total hours worked grew about 0.7% a year across the
+panel since 2014 and about 0.95% a year over 1950–2023. An asset divided
+by GDP asks “what share of production”; divided by GDP per hour it asks
+“how many hours of work”. The gap compounds.</li>
+<li><strong>In world hours, the post-2014 rally is smaller than it looks
+in dollars.</strong> From 2014-Q1 to 2026-Q2 the S&amp;P 500 with
+dividends reinvested rose 5.0× in dollars and 3.5× in world hours; gold
+rose 2.5× in world hours. Between a fifth (in log terms) and two-fifths
+(in arithmetic terms) of the dollar gain is the rise in what an hour of
+the world’s work is worth. Over 2000–2025 the S&amp;P 500 in world hours
+is about 2.7× its starting level, against 7.1× in dollars.</li>
+<li><strong>The global market portfolio held since 2020 is roughly flat
+in world hours.</strong> Measured from 2019-Q4, a rule-based GMP index
+reached 107 in world-hour terms by 2026-Q2 after a trough of 83 in
+2022-Q3. Over the long run both world equities and the GMP have beaten
+the world hour: in every rolling 20-year window since the 1970s the
+excess was positive, with a median of 4.3% a year for equities and 3.0%
+for the GMP.</li>
+</ol>
+<p>The unit does not replace the dollar. It answers a question the
+dollar cannot: whether wealth has grown relative to the work that
+produces everything wealth can buy.</p>
+<h2 id="why-a-unit-of-account-is-a-design-choice">1. Why a unit of
+account is a design choice</h2>
+<p>The first note in this series (Nakanishi 2026a) built an index of the
+investable global market portfolio and reported all results in US
+dollars, stating that no claims were made for other numeraires. That
+reservation was deliberate. A fifty-year return series in dollars mixes
+three things: the change in the asset, the change in the dollar against
+other currencies, and the change in what a dollar buys. Deflating by
+consumer prices removes some of the third but introduces a basket whose
+composition, quality adjustments and hedonics are themselves contested,
+and which by construction ignores productivity: a unit that holds a
+basket of goods fixed will always show real assets “outrunning” it as
+production per person grows.</p>
+<p>Ricardo’s (1823) last, unfinished essay concluded that no invariable
+measure of value exists, and that any unit must be chosen for the
+question at hand. The question this note asks is the one a long-horizon
+saver asks: <em>has my claim on the world’s output grown or shrunk
+relative to the work that produces it?</em> The natural unit for that
+question is an hour of work, valued at what the world actually pays for
+it in aggregate — not the wage, which depends on the labour share, but
+output per hour.</p>
+<p>Keynes (1936, ch. 4) took the wage unit as his measure precisely
+because it was the most stable available; Tupy and Pooley (2018–2022)
+use nominal GDP per hour worked as a proxy for global time income in
+their “time-price” measure of abundance; Officer and Williamson’s
+MeasuringWorth project reports historical values in several units side
+by side and refuses to select one. This note sits in that line. What it
+adds is a reproducible, GDP-weighted, chained world series at quarterly
+frequency, a comparison of its statistical properties with five
+alternatives, and its application to asset prices — including the GMP
+built in the first note.</p>
+<h2 id="definition">2. Definition</h2>
+<p>For each country <em>c</em> with a local-currency index <em>I</em>
+and an exchange rate <em>FX</em> (US dollars per unit of local
+currency), the chained USD-denominated world unit <em>P</em> is</p>
+<pre><code>Δlog P_t = Σ_c s_{c,t} · [ Δlog I_{c,t} + Δlog FX_{c,t} ] / Σ_c s_{c,t}</code></pre>
+<p>where <em>s_{c,t}</em> is the country’s share of the prior year’s
+nominal GDP in US dollars (World Bank), re-normalised each period over
+the countries with data in that period.</p>
+<p>The candidate units, all built with the same weights and the same
+chain, differ only in <em>I</em>:</p>
+<div class="scroll"><table>
+<thead>
+<tr class="header">
+<th>Unit</th>
+<th>Country index <em>I</em></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Currency basket</td>
+<td>1 (exchange rate only)</td>
+</tr>
+<tr class="even">
+<td>Consumer prices</td>
+<td>CPI</td>
+</tr>
+<tr class="odd">
+<td>Wages</td>
+<td>Manufacturing hourly earnings</td>
+</tr>
+<tr class="even">
+<td>Money per person</td>
+<td>Broad money ÷ population</td>
+</tr>
+<tr class="odd">
+<td><strong>World hour</strong></td>
+<td><strong>Nominal GDP ÷ total hours worked</strong></td>
+</tr>
+<tr class="even">
+<td>Gold</td>
+<td>USD price (no country dimension)</td>
+</tr>
+</tbody>
+</table></div>
+<p>For comparison, a composite unit is also defined as a geometric mean,
+log <em>U</em> = Σ <em>w_i</em> log <em>P_i</em>, in two equal-weight
+presets: one using wages (<code>equal5</code>), one using the world hour
+(<code>equal5t</code>). An asset’s value in world hours is its USD price
+divided by the world-hour index. Where the note reports a value in “any
+unit”, the minimum and maximum across the six units are shown as a
+disagreement band.</p>
+<p>Two design decisions deserve a sentence each. The weights are nominal
+GDP at market exchange rates, not purchasing-power parity, because the
+object being measured is what the world pays for an hour at the prices
+at which assets trade; Section 8 reports the PPP-weighted alternative.
+And the series is a chain index: it measures the change in the value of
+an hour holding the country mix fixed period to period, so the shift of
+hours from higher- to lower-output countries appears in the
+<em>level</em> (Section 4.3) but not in the chained change.</p>
+<h2 id="data-and-construction">3. Data and construction</h2>
+<p>Everything is free and public. The full pull is reproduced by one
+shell script and two Python scripts (Appendix).</p>
+<div class="scroll"><table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Series</th>
+<th>Source</th>
+<th>Frequency and start</th>
+<th>Countries</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>US GDP per hour</td>
+<td>FRED OPHNFB × IPDNBS (non-farm business, nominalised)</td>
+<td>Quarterly, 1947–</td>
+<td class="num">1</td>
+</tr>
+<tr class="even">
+<td>World GDP per hour, monthly version</td>
+<td>World Bank nominal GDP ÷ Penn World Table hours (employment × annual
+hours, via FRED)</td>
+<td>Annual interpolated, 1968–</td>
+<td class="num">43</td>
+</tr>
+<tr class="odd">
+<td>World GDP per hour, quarterly version</td>
+<td>OECD QNA nominal GDP ÷ quarterly total hours worked</td>
+<td>Quarterly, 2014-Q1 to 2026-Q2</td>
+<td class="num">38</td>
+</tr>
+<tr class="even">
+<td>Hours sources</td>
+<td>OECD QNA total hours (23); FRED HOANBS (1); OECD quarterly
+employment × annual hours (7); PWT annual, interpolated (12)</td>
+<td></td>
+<td>43, of which 38 in the quarterly version</td>
+</tr>
+<tr class="odd">
+<td>Exchange rates</td>
+<td>BIS WS_XRU</td>
+<td>Monthly, 1957–</td>
+<td class="num">44</td>
+</tr>
+<tr class="even">
+<td>Consumer prices</td>
+<td>BIS WS_LONG_CPI</td>
+<td>Monthly, mostly 1950s–</td>
+<td class="num">43</td>
+</tr>
+<tr class="odd">
+<td>Wages</td>
+<td>OECD hourly earnings, manufacturing, seasonally adjusted</td>
+<td>Quarterly; US, Japan, Canada, UK from 1955</td>
+<td class="num">23</td>
+</tr>
+<tr class="even">
+<td>Money per person</td>
+<td>OECD monetary aggregates (broad money) ÷ World Bank population</td>
+<td>Monthly</td>
+<td class="num">26</td>
+</tr>
+<tr class="odd">
+<td>Gold</td>
+<td>LBMA PM fix</td>
+<td>Daily, 1968–</td>
+<td class="num">—</td>
+</tr>
+</tbody>
+</table></div>
+<p>The panel is 44 countries and territories. The monthly series uses
+the 43 with World Bank annual GDP; the quarterly series and the levels
+in Section 4.3 use the 38 with both OECD quarterly GDP and an hours
+source (Hong Kong, Malaysia, the Philippines, Singapore and Thailand
+have hours but no quarterly GDP). Handling rules, stated so they can be
+disputed: BIS exchange-rate series for euro-area members are already
+expressed in euro before 1999, so mark-to-euro chaining is needed only
+for the euro-area monetary aggregate; series without an official
+seasonal adjustment are adjusted by ratio to a centred moving average;
+China and Saudi Arabia lack hours-per-worker data, so 2,100 hours per
+worker a year are assumed for the level calculation (this does not enter
+the chained index); months after the last annual observation are
+extrapolated at the trailing one-year growth rate and flagged
+provisional; the latest quarter is dropped if the reporting countries
+cover less than half of panel GDP, and reported as provisional when they
+cover less than all of it (currently about 80%).</p>
+<h2 id="properties-of-the-unit">4. Properties of the unit</h2>
+<h3 id="drift-and-volatility">4.1 Drift and volatility</h3>
+<p>Table 1 reports, for each unit in USD, the annualised drift and the
+annualised standard deviation of log changes — monthly changes × √12 for
+1968–2026, quarterly changes × 2 for 2014–2026. The two columns are not
+the same object for the world hour: the long column is the annually
+interpolated monthly series (which mechanically smooths it, and which is
+provisional after 2025-06), the short column the quarterly series
+observed from OECD data.</p>
+<p><strong>Table 1. Six units in USD: drift and volatility, % a year
+(author’s calculations)</strong></p>
+<div class="scroll"><table>
+<thead>
+<tr class="header">
+<th>Unit</th>
+<th>Drift 1968–2026</th>
+<th>Volatility</th>
+<th>Drift 2014–2026</th>
+<th>Volatility</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Currency basket</td>
+<td class="num">−2.5</td>
+<td class="num">3.9</td>
+<td class="num">−2.2</td>
+<td class="num">3.4</td>
+</tr>
+<tr class="even">
+<td>Consumer prices</td>
+<td class="num">3.6</td>
+<td class="num">4.0</td>
+<td class="num">0.9</td>
+<td class="num">3.6</td>
+</tr>
+<tr class="odd">
+<td>Manufacturing wages</td>
+<td class="num">4.6</td>
+<td class="num">4.1</td>
+<td class="num">—</td>
+<td class="num">3.5</td>
+</tr>
+<tr class="even">
+<td><strong>World hour</strong></td>
+<td class="num"><strong>5.7</strong></td>
+<td class="num"><strong>3.9</strong></td>
+<td class="num"><strong>2.9</strong></td>
+<td class="num"><strong>3.9</strong></td>
+</tr>
+<tr class="odd">
+<td>Money per person</td>
+<td class="num">6.8</td>
+<td class="num">4.5</td>
+<td class="num">4.4</td>
+<td class="num">3.7</td>
+</tr>
+<tr class="even">
+<td>Gold</td>
+<td class="num">8.4</td>
+<td class="num">16.1</td>
+<td class="num">10.2</td>
+<td class="num">12.4</td>
+</tr>
+</tbody>
+</table></div>
+<p>For the US alone, where no exchange-rate component enters, the same
+figures are CPI 3.9/1.1, wages 4.1/1.0, money per person 5.6/1.7, gold
+8.0/16.1 and the equal-weight composite 4.3/3.3.</p>
+<p>Two readings. First, the five non-gold units have almost the same
+volatility (3.4–4.5%), most of it the exchange-rate component they
+share; the world hour is not distinguished within that band — the
+currency basket is marginally lower over 1968–2026, and over 2014–2026
+the world hour is the highest of the five. Its long-sample figure is
+also flattered by interpolation. No claim of superior stability is made
+on this evidence. Second, over 1968–2026 the drifts order the units as
+national accounting would predict: cash below prices, prices below
+wages, wages below output per hour (the labour share fell), output per
+hour below money (velocity fell), and gold above everything with four
+times the noise.</p>
+<p>The case for the world hour is therefore structural, not statistical,
+and is worth stating explicitly. Nominal GDP per hour contains prices,
+exchange rates and hours — it is not a “real” measure. What it does not
+contain is the split of output between wages and profits, and it does
+not contain the market’s expectation of the future. Those two omissions
+are exactly what make wages, money and gold move more than it does.</p>
+<h3 id="gdp-and-gdp-per-hour-are-not-the-same-denominator">4.2 GDP and
+GDP per hour are not the same denominator</h3>
+<p>It is tempting to treat an asset-to-GDP ratio as the same thing as an
+asset in hours. It is not. The difference is total hours worked, which
+grow with population and participation and shrink with recessions and
+shorter working weeks.</p>
+<p><strong>Table 2. World panel, chained, 2014-Q1 = 100 (author’s
+calculations)</strong></p>
+<div class="scroll"><table>
+<thead>
+<tr class="header">
+<th></th>
+<th>Nominal GDP</th>
+<th>GDP per hour</th>
+<th>Total hours</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2020-Q2</td>
+<td class="num">98</td>
+<td class="num">104</td>
+<td class="num">94</td>
+</tr>
+<tr class="even">
+<td>2026-Q1</td>
+<td class="num">153</td>
+<td class="num">141</td>
+<td class="num">109</td>
+</tr>
+<tr class="odd">
+<td>Annualised</td>
+<td class="num">3.6%</td>
+<td class="num">2.9%</td>
+<td class="num">0.7%</td>
+</tr>
+</tbody>
+</table></div>
+<p>In 2020-Q2 GDP fell and GDP per hour <em>rose</em>, because hours
+fell faster than output. Over the 22-country long sample (1950–2023)
+hours grew 0.95% a year; over 2014–2025 the annual rate was +1.0% in the
+United States, 0.0 in Japan, +0.2 in Germany, +0.9 in the UK, −0.1 in
+Korea, −0.3 in China, +2.6 in India, +0.6 in Brazil, +1.5 in Mexico and
++1.8 in Indonesia. A ratio to GDP therefore understates how many hours
+an asset commands in countries where hours are growing, and the gap
+widens as the emerging-market weight rises.</p>
+<h3 id="the-level-what-is-an-hour-of-the-worlds-work-worth">4.3 The
+level: what is an hour of the world’s work worth?</h3>
+<p>The chained index has no level; the level comes from the panel ratio,
+nominal GDP in USD divided by total hours. It was $15.3 in 2014-Q1 and
+$20.7 in 2026-Q2. Country levels in 2026-Q1: United States 106, Germany
+88, Japan 40, Korea 39, Saudi Arabia 37, Mexico 16, China 14, Brazil 13,
+Indonesia 5, India 2 (USD per hour). The level includes the shift in
+composition toward lower-output hours; the chained change does not. Both
+are reported because they answer different questions.</p>
+<h3 id="output-per-hour-versus-the-wage">4.4 Output per hour versus the
+wage</h3>
+<p>In the United States, GDP per hour has outrun manufacturing hourly
+earnings by roughly 20% since 2000 — the labour-share decline in one
+number. The world gap is larger, but it mixes two things: a
+distributional shift, and a composition effect, because the wage panel
+is OECD-only and excludes China and India while the GDP-per-hour panel
+includes them. The two should not be read as the same phenomenon.</p>
+<h2 id="asset-prices-in-world-hours">5. Asset prices in world hours</h2>
+<h3 id="the-long-run-2000-100">5.1 The long run, 2000 = 100</h3>
+<p><strong>Table 3. S&amp;P 500, dividends reinvested, in five units,
+2000-01 = 100 (author’s calculations)</strong></p>
+<div class="scroll"><table>
+<thead>
+<tr class="header">
+<th>Unit</th>
+<th>World version (to 2025-06)</th>
+<th>US version (to 2026-06)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>US dollars</td>
+<td class="num">714</td>
+<td class="num">874</td>
+</tr>
+<tr class="even">
+<td>Consumer prices</td>
+<td class="num">450</td>
+<td class="num">445</td>
+</tr>
+<tr class="odd">
+<td><strong>World hour / US GDP per hour</strong></td>
+<td class="num"><strong>268</strong></td>
+<td class="num"><strong>296</strong></td>
+</tr>
+<tr class="even">
+<td>Money per person</td>
+<td class="num">162</td>
+<td class="num">215</td>
+</tr>
+<tr class="odd">
+<td>Gold</td>
+<td class="num">61</td>
+<td class="num">59</td>
+</tr>
+</tbody>
+</table></div>
+<p>The equity series is total return; gold is a price, so the gold row
+compares an income-bearing asset with one that bears none.</p>
+<p>The two columns end a year apart because the monthly world series is
+built on annual hours data (Penn World Table) and stops at the last
+annual observation; it is not extrapolated into 2026 for this table. The
+US series is quarterly and observed to 2026-Q2. The quarterly world
+panel in Section 5.2 covers the later period.</p>
+<p>Measured in hours of work, a quarter-century of US equities with
+dividends reinvested comes to 2.7–3.0×, against 7–9× in dollars; the
+2000 starting point was itself an extreme. Measured in gold, the same
+holding lost roughly 40%; gold in world hours is about five times its
+2000 level.</p>
+<h3 id="the-quarterly-panel-2014-q1-100">5.2 The quarterly panel,
+2014-Q1 = 100</h3>
+<p><strong>Table 4. Values at 2026-Q2, 2014-Q1 = 100 (author’s
+calculations). S&amp;P 500 rows are quarter-end values; all other rows
+are quarterly averages.</strong></p>
+<div class="scroll"><table>
+<thead>
+<tr class="header">
+<th></th>
+<th>Index</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>World hour (USD)</td>
+<td class="num">142</td>
+</tr>
+<tr class="even">
+<td>S&amp;P 500 with dividends, USD</td>
+<td class="num">497</td>
+</tr>
+<tr class="odd">
+<td>S&amp;P 500 with dividends, world hours</td>
+<td class="num">349</td>
+</tr>
+<tr class="even">
+<td>Gold, world hours</td>
+<td class="num">245</td>
+</tr>
+<tr class="odd">
+<td>Currency basket</td>
+<td class="num">77</td>
+</tr>
+<tr class="even">
+<td>Consumer prices</td>
+<td class="num">112</td>
+</tr>
+<tr class="odd">
+<td>Money per person</td>
+<td class="num">171</td>
+</tr>
+</tbody>
+</table></div>
+<p>The identity is exact: 497 = 349 × 1.42. How the dollar gain is
+“attributed” between the asset and the unit is a matter of convention —
+in log terms the unit accounts for 22% of it, in arithmetic terms 37% —
+but the physical statement is unambiguous: a holder of the S&amp;P 500
+commands 3.5 times the hours of world work that she did in 2014, not
+5.0. (On a price basis, excluding dividends, the figures are 401 in
+dollars and 281 in world hours.)</p>
+<h3
+id="rolling-excess-of-world-equities-and-the-gmp-over-the-world-hour">5.3
+Rolling excess of world equities and the GMP over the world hour</h3>
+<p>World equities are the equity sleeve of the frozen backtest engine
+behind the first note (USD, dividends reinvested, February 1972 to June
+2025); the GMP is that note’s rulebook-compliant index (January 1976 to
+June 2025). Both are taken from the frozen engine’s output files, whose
+checksums are given in the Appendix. The world hour here is the monthly
+(annually interpolated) series. Table 5 reports the distribution of
+annualised excess returns over the world hour across all rolling
+windows.</p>
+<p><strong>Table 5. Excess return over the world hour, rolling windows,
+% a year (author’s calculations)</strong></p>
+<div class="scroll"><table>
+<thead>
+<tr class="header">
+<th></th>
+<th>Worst</th>
+<th>10th pct</th>
+<th>Median</th>
+<th>90th pct</th>
+<th>Share of windows negative</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>World equities, 10y</td>
+<td class="num">−4.3</td>
+<td class="num">0.0</td>
+<td class="num">5.1</td>
+<td class="num">10.6</td>
+<td class="num">10%</td>
+</tr>
+<tr class="even">
+<td>World equities, 20y</td>
+<td class="num">0.0</td>
+<td class="num">2.2</td>
+<td class="num">4.3</td>
+<td class="num">8.4</td>
+<td class="num">0%</td>
+</tr>
+<tr class="odd">
+<td>GMP, 10y</td>
+<td class="num">−0.5</td>
+<td class="num">0.7</td>
+<td class="num">3.8</td>
+<td class="num">7.6</td>
+<td class="num">6%</td>
+</tr>
+<tr class="even">
+<td>GMP, 20y</td>
+<td class="num">1.1</td>
+<td class="num">1.6</td>
+<td class="num">3.0</td>
+<td class="num">6.9</td>
+<td class="num">0%</td>
+</tr>
+</tbody>
+</table></div>
+<p>The windows overlap month by month — 521 ten-year and 401 twenty-year
+windows for equities, 474 and 354 for the GMP, of which only about five
+and two respectively are independent — so “share of windows negative” is
+a historical frequency, not a probability. Over the whole sample world
+equities beat the world hour by 4.0% a year. The worst ten-year windows
+end in February 2009 and July 1982 — the two occasions on which falling
+equities coincided with a fast-rising world hour (inflation). The GMP’s
+floor is higher and its ceiling lower, as its bond and gold sleeves
+would predict.</p>
+<p>A practical translation: an investor whose wealth has fallen 34% in
+world hours needs an excess return of 4.2% a year over ten years, 2.8%
+over fifteen or 2.1% over twenty to recover it. Historically, world
+equities delivered at least that in 61%, 70% and 91% of windows
+respectively. Recovery in hours is likely at twenty years and far from
+certain at ten.</p>
+<h3 id="the-gmp-held-since-2020">5.4 The GMP held since 2020</h3>
+<p><strong>Table 6. 2019-Q4 = 100 (author’s calculations)</strong></p>
+<div class="scroll"><table>
+<thead>
+<tr class="header">
+<th></th>
+<th>2022-Q4</th>
+<th>2026-Q2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>World hour (USD)</td>
+<td class="num">111</td>
+<td class="num">135</td>
+</tr>
+<tr class="even">
+<td>GMP index, USD</td>
+<td class="num">98</td>
+<td class="num">145</td>
+</tr>
+<tr class="odd">
+<td><strong>GMP index, world hours</strong></td>
+<td class="num"><strong>88</strong></td>
+<td class="num"><strong>107</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>In dollars the GMP looks like a 45% gain over six and a half years.
+In hours it is a 17% drawdown to 2022-Q3, still −12% at end-2022, then a
+recovery to +7% — six and a half years inside a band from −17% to +7%,
+ending close to flat. The reason is structural: a GDP-weighted world
+unit and a market-weighted world portfolio share most of their currency
+composition, so the exchange-rate noise that dominates Table 1
+cancels.</p>
+<h3 id="what-should-be-flat-in-world-hours">5.5 What should be flat in
+world hours</h3>
+<p>A first-principles list, reported as hypotheses rather than
+findings:</p>
+<ul>
+<li>A claim on nominal GDP itself is flat by construction. Equity is
+such a claim plus a risk premium and plus the labour-share effect, so it
+should — and, in Table 5, does — outrun the hour over long
+horizons.</li>
+<li>Inflation-linked bonds lose the productivity term, roughly 2% a
+year.</li>
+<li>Commodities’ time prices fall 3–4% a year over the long run (Tupy
+and Pooley); they cannot be flat in hours. Gold is the exception in the
+sample, and the 1968 start (the year the two-tier gold market began)
+flatters it.</li>
+<li>Cash bears the full depreciation of its currency, between −2% and
+−8% a year across the panel.</li>
+</ul>
+<h2 id="currencies-in-world-hours">6. Currencies in world hours</h2>
+<p>Every currency must lose value against the world hour, because the
+hour’s value grows with both prices and productivity. The US dollar fell
+from 100 to 71 between 2014-Q2 and 2026-Q2, −2.8% a year. Over the same
+period the GDP-weighted currency basket lost 2.2% a year against the
+dollar and 5.0% a year against the world hour; over the long sample
+since 1968 the basket’s loss against the dollar is 2.5% a year. US
+nominal GDP per hour has grown 4.2% a year since 2014; the world hour,
+in dollars, 2.9%. The difference is the dollar’s appreciation and the
+panel’s weight toward lower-growth currencies.</p>
+<h2 id="where-this-sits-in-the-literature">7. Where this sits in the
+literature</h2>
+<p>The author’s literature file organises about 90 items under nine
+headings; the ones that bear directly on the design are these. Keynes
+(1936) chose the wage unit for stability. Tupy and Pooley (2018–2022)
+defined the time price and proxied global time income with nominal GDP
+per hour. Officer and Williamson (MeasuringWorth) refused a single
+measure and report several. Hall (1982) proposed a target-tracking
+commodity basket as a unit. Long (1990) defined the numeraire portfolio
+— the portfolio in whose units every asset is a martingale — which is
+the closest finance-theoretic relative of what Section 5.4 finds
+empirically for the GMP. Ricardo (1823) supplies the epistemic caveat.
+Three units with substantial literatures were not implemented here and
+are the obvious next steps: a commodity basket, the market portfolio
+itself as numeraire, and energy.</p>
+<h2 id="robustness">8. Robustness</h2>
+<p>Ten variants of the quarterly world-hour index were rebuilt from the
+same raw pulls (<code>robustness_q.py</code>), changing one construction
+choice at a time. Table 7 reports, for each, the 2026-Q2 value (2014-Q1
+= 100), annualised growth and volatility, the largest absolute
+divergence from the baseline in any quarter, the divergence at the end
+point, and the correlation of quarterly log changes with the
+baseline.</p>
+<p><strong>Table 7. Quarterly world-hour index under alternative
+constructions, 2014-Q1 = 100 (author’s calculations)</strong></p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 34%" />
+<col style="width: 9%" />
+<col style="width: 9%" />
+<col style="width: 9%" />
+<col style="width: 9%" />
+<col style="width: 9%" />
+<col style="width: 9%" />
+<col style="width: 9%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Variant</th>
+<th>2026-Q2</th>
+<th>Growth % p.a.</th>
+<th>Vol. % p.a.</th>
+<th>Max dev. %</th>
+<th>End dev. %</th>
+<th>Corr. Δlog</th>
+<th>Countries</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Baseline</strong> (nominal GDP weights, four-tier hours,
+ratio-to-MA seasonal adjustment)</td>
+<td class="num"><strong>142.3</strong></td>
+<td class="num"><strong>2.88</strong></td>
+<td class="num"><strong>3.89</strong></td>
+<td class="num">—</td>
+<td class="num">—</td>
+<td class="num">—</td>
+<td class="num">38</td>
+</tr>
+<tr class="even">
+<td>Weights: PPP GDP</td>
+<td class="num">146.5</td>
+<td class="num">3.12</td>
+<td class="num">4.36</td>
+<td class="num">3.3</td>
+<td class="num">+2.9</td>
+<td class="num">0.971</td>
+<td class="num">38</td>
+</tr>
+<tr class="odd">
+<td>Weights: equal</td>
+<td class="num">131.6</td>
+<td class="num">2.24</td>
+<td class="num">5.42</td>
+<td class="num">12.2</td>
+<td class="num">−7.8</td>
+<td class="num">0.941</td>
+<td class="num">38</td>
+</tr>
+<tr class="even">
+<td>Panel: OECD countries with QNA hours only</td>
+<td class="num">123.5</td>
+<td class="num">1.72</td>
+<td class="num">5.70</td>
+<td class="num">20.3</td>
+<td class="num">−14.2</td>
+<td class="num">0.889</td>
+<td class="num">23</td>
+</tr>
+<tr class="odd">
+<td>Panel: excluding China</td>
+<td class="num">131.0</td>
+<td class="num">2.20</td>
+<td class="num">3.88</td>
+<td class="num">9.6</td>
+<td class="num">−8.3</td>
+<td class="num">0.947</td>
+<td class="num">37</td>
+</tr>
+<tr class="even">
+<td>Panel: advanced economies only</td>
+<td class="num">134.7</td>
+<td class="num">2.43</td>
+<td class="num">3.44</td>
+<td class="num">6.6</td>
+<td class="num">−5.5</td>
+<td class="num">0.902</td>
+<td class="num">28</td>
+</tr>
+<tr class="odd">
+<td>Hours: employment × annual hours per worker, all countries</td>
+<td class="num">144.3</td>
+<td class="num">2.99</td>
+<td class="num">4.34</td>
+<td class="num">2.1</td>
+<td class="num">+1.4</td>
+<td class="num">0.964</td>
+<td class="num">38</td>
+</tr>
+<tr class="even">
+<td>Hours: PWT annual, interpolated, all countries</td>
+<td class="num">142.2</td>
+<td class="num">2.88</td>
+<td class="num">5.09</td>
+<td class="num">5.5</td>
+<td class="num">−0.1</td>
+<td class="num">0.861</td>
+<td class="num">38</td>
+</tr>
+<tr class="odd">
+<td>Seasonal adjustment: STL instead of ratio-to-MA</td>
+<td class="num">142.3</td>
+<td class="num">2.88</td>
+<td class="num">3.84</td>
+<td class="num">0.5</td>
+<td class="num">0.0</td>
+<td class="num">0.992</td>
+<td class="num">38</td>
+</tr>
+<tr class="even">
+<td>Seasonal adjustment: officially adjusted series only</td>
+<td class="num">131.6</td>
+<td class="num">2.24</td>
+<td class="num">3.93</td>
+<td class="num">9.4</td>
+<td class="num">−7.9</td>
+<td class="num">0.945</td>
+<td class="num">36</td>
+</tr>
+<tr class="odd">
+<td>Cross-check: annual WB/PWT version (<code>world.py</code>), to
+2025-Q2</td>
+<td class="num">132.9</td>
+<td class="num">2.53</td>
+<td class="num">3.74</td>
+<td class="num">2.0</td>
+<td class="num">+0.5</td>
+<td class="num">0.964</td>
+<td class="num">43</td>
+</tr>
+</tbody>
+</table></div>
+<p>Three conclusions.</p>
+<p><strong>The measurement choices are second-order.</strong> Replacing
+the four-tier hours construction with a single method for every country
+moves the end point by at most 1.4 points; the seasonal-adjustment
+method moves it by nothing (STL was used as the alternative; X-13 was
+not available in the build environment, and the STL result is close
+enough to make the test unnecessary). The PWT-interpolated variant has
+the same end point but is noisier quarter to quarter (correlation 0.86),
+which is what interpolating annual data should do. The independent
+annual build in <code>world.py</code>, from World Bank GDP and Penn
+World Table hours, lands within half a point of the quarterly series at
+2025-Q2. The hours data are the weakest input, but the ways of handling
+them do not change the answer.</p>
+<p><strong>Weights are first-order but interpretable.</strong> PPP
+weights raise the end point by three points and the growth rate by a
+quarter of a percent a year, because they give more weight to countries
+whose output per hour is growing faster in dollars. That is the expected
+direction and size, and it does not change any ordering in Table 1.
+Equal weights are not a serious alternative — they give Indonesia the
+weight of the United States — and are shown only to bound the
+sensitivity.</p>
+<p><strong>Composition is what matters, and specifically China.</strong>
+Every variant that drops countries lowers the index: excluding China
+takes off eight points, restricting to advanced economies five,
+restricting to the 23 countries with official quarterly hours fourteen.
+These are not measurement error; they are different objects. A world
+hour built on OECD members only is an OECD hour, and it grows 1.7% a
+year rather than 2.9%. The “officially adjusted series only” row belongs
+to the same family: the two countries it drops are China and Saudi
+Arabia (their nominal GDP is published unadjusted), while Canada, Chile,
+Mexico and New Zealand stay in with a different hours source — so its
+−7.9% is, in effect, the China exclusion again. China matters because
+its output per hour in dollars grew faster than the panel average. Note
+the direction of the remaining bias: China’s hours per worker are held
+at a fixed 2,100 a year for lack of data, and they have in fact been
+falling, so the baseline most likely <em>understates</em> China’s growth
+in output per hour. Including China more accurately would push the world
+hour up, not down; the baseline is on the conservative side.</p>
+<p>For Sections 5 and 6 the reading is this: the end-of-sample level of
+the unit moves by about ±3% under the weighting choice and about ±8%
+under the treatment of China. Neither changes the order of magnitude of
+any result — the S&amp;P 500 at 3.5× and gold at 2.5× in world hours,
+the GMP roughly flat since 2020, every currency depreciating — and the
+direction of every result holds under all ten variants.</p>
+<h2 id="limitations">9. Limitations</h2>
+<p>Stated in the order of their likely importance.</p>
+<p><strong>The unit is nominal and includes exchange rates.</strong> The
+world hour is not a “real” quantity. It is a statement of what the world
+pays, in dollars, for an hour of work at the prices at which assets
+trade. A reader who wants a productivity measure should use hours at
+constant prices, which is a different object.</p>
+<p><strong>Hours data are the weakest link.</strong> Quarterly total
+hours are observed for 23 countries; the rest are constructed from
+employment and annual hours, or interpolated from annual Penn World
+Table data. China’s hours per worker are held at a fixed value
+throughout, which Section 8 argues biases the unit downward; an
+ILO-based estimate is the obvious replacement. The seasonal adjustment
+used for non-adjusted series is crude. Section 8 shows that these
+choices move the end point by less than two points; the panel
+composition moves it by up to fourteen.</p>
+<p><strong>The latest quarters are provisional.</strong> The most recent
+quarter is computed on the countries that have reported (about 80% of
+panel GDP) and is revised as the rest arrive. Months after the last
+annual observation are extrapolated. The note reports the provisional
+values because withholding them would hide the reason the series
+changes.</p>
+<p><strong>Vintages were not tested.</strong> All series are the current
+published vintage; a rebuild on data as first published, to measure how
+much the latest quarters are revised, has not been done.</p>
+<p><strong>One history.</strong> The distributions in Table 5 are drawn
+from a single realisation, 1972–2025, whose long-window results depend
+heavily on the 1980–2000 equity expansion. They describe what happened,
+not what the distribution of outcomes is.</p>
+<p><strong>The wage comparison mixes composition with
+distribution.</strong> Section 4.4 cannot separate the labour-share
+decline from the fact that the wage panel excludes the two largest
+emerging economies.</p>
+<p><strong>Weights are one convention.</strong> Market-rate GDP weights
+were chosen for the reason given in Section 2; PPP weights are an
+equally defensible convention and give a series about three points
+higher at the end of the sample (Section 8).</p>
+<p><strong>No claim of usefulness as a target.</strong> The world hour
+is proposed as a measuring unit, not as a policy target, an indexation
+base or an investment benchmark. Nothing here suggests holding any asset
+because of its behaviour in world hours.</p>
+<h2 id="disclaimer">10. Disclaimer</h2>
+<p>This note is general information and a research record addressed to
+no particular reader. It does not recommend any security, fund or
+transaction, does not suggest timing, and is not individualised advice.
+The author is not a regulated investment adviser or licensed financial
+services provider and does not respond to individual requests for
+advice. Historical and simulated figures do not indicate future results;
+backtest figures are hypothetical and are not the results of any actual
+account. No representation is made as to the accuracy or completeness of
+the information, and the author accepts no liability for any loss
+arising from its use. All tables are the author’s own calculations from
+public data; no figures from other publications are reproduced. Index
+names are trademarks of their owners. Nothing here is legal advice.</p>
+<p>The author resides in Japan. This note provides general information
+to an unspecified audience and does not constitute investment advisory
+business under the Financial Instruments and Exchange Act of Japan.</p>
+<h2 id="references">References</h2>
+<p>Bank for International Settlements. <em>Bilateral exchange rates
+(WS_XRU)</em> and <em>Long consumer price series (WS_LONG_CPI)</em>. BIS
+Data Portal (SDMX API), accessed September 2026.</p>
+<p>Feenstra, R. C., Inklaar, R. and Timmer, M. P. (2015). “The Next
+Generation of the Penn World Table.” <em>American Economic Review</em>,
+105(10), 3150–3182. Penn World Table 11 series via FRED, to 2023.</p>
+<p>LBMA. <em>Gold price, PM</em>. London Bullion Market Association,
+accessed September 2026.</p>
+<p>Hall, R. E. (1982). “Explorations in the Gold Standard and Related
+Policies for Stabilizing the Dollar.” In R. E. Hall (ed.),
+<em>Inflation: Causes and Effects</em>. University of Chicago Press.</p>
+<p>Keynes, J. M. (1936). <em>The General Theory of Employment, Interest
+and Money</em>. Macmillan. Chapter 4, “The Choice of Units”.</p>
+<p>Long, J. B. (1990). “The Numeraire Portfolio.” <em>Journal of
+Financial Economics</em>, 26(1), 29–69.</p>
+<p>OECD. <em>Quarterly National Accounts</em>, <em>Hourly Earnings
+(Manufacturing)</em>, <em>Monetary Aggregates</em>, <em>Infra-annual
+Labour Statistics</em>. OECD Data Explorer, accessed September 2026.</p>
+<p>Nakanishi, K. (2026a). “Owning the Market as It Is: A Half-Century
+Look at the Global Market Portfolio.” Research note, SSRN.
+doi:10.2139/ssrn.7394599.</p>
+<p>Nakanishi, K. (2026b). <em>Global Market Portfolio Weight History,
+1976–2026</em>, v1.0.0. Zenodo. doi:10.5281/zenodo.22151403 (all
+versions: doi:10.5281/zenodo.22151402).</p>
+<p>Officer, L. H. and Williamson, S. H. <em>Measures of Worth</em>.
+MeasuringWorth.com, accessed 10 September 2026.</p>
+<p>Ricardo, D. (1823). “Absolute Value and Exchangeable Value.” In P.
+Sraffa (ed.), <em>The Works and Correspondence of David Ricardo</em>,
+vol. IV. Cambridge University Press, 1951.</p>
+<p>Tupy, M. L. and Pooley, G. L. (2018). “The Simon Abundance Index: A
+New Way to Measure Availability of Resources.” Cato Institute Policy
+Analysis 857.</p>
+<p>Tupy, M. L. and Pooley, G. L. (2022). <em>Superabundance: The Story
+of Population Growth, Innovation, and Human Flourishing on an Infinitely
+Bountiful Planet</em>. Cato Institute.</p>
+<p>World Bank. <em>World Development Indicators</em>: GDP (current US$
+and LCU), GDP PPP (current international $), population, labour force.
+Accessed September 2026.</p>
+<p>Yahoo Finance. ^GSPC daily close, accessed September 2026. S&amp;P
+500 total return (SP500TR) via FRED.</p>
+<h2 id="appendix-reproduction">Appendix: Reproduction</h2>
+<div class="scroll"><table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>File</th>
+<th>Content</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>fetch_world.sh</code></td>
+<td>Raw pulls from BIS (exchange rates, CPI), OECD (quarterly national
+accounts, employment, hours, earnings, monetary aggregates) and World
+Bank (GDP in USD, LCU and PPP; population; labour force)</td>
+</tr>
+<tr class="even">
+<td><code>world.py</code></td>
+<td>Monthly world series, 1968–, GDP-weighted chain</td>
+</tr>
+<tr class="odd">
+<td><code>world_q.py</code></td>
+<td>Quarterly world series, 2014-Q1–, the main series</td>
+</tr>
+<tr class="even">
+<td><code>numeraire.py</code></td>
+<td>US-only units, composites, asset valuation</td>
+</tr>
+<tr class="odd">
+<td><code>gmp_counterfactual.py</code></td>
+<td>GMP in world hours</td>
+</tr>
+<tr class="even">
+<td><code>robustness_q.py</code></td>
+<td>Section 8 variants, writes <code>output/robustness_q.csv</code></td>
+</tr>
+<tr class="odd">
+<td><code>output/world_q_*.csv</code></td>
+<td>Quarterly indices, levels, asset valuations, coverage, hours
+sources</td>
+</tr>
+</tbody>
+</table></div>
+<p>Inputs to Tables 5 and 6, from the frozen engine (SHA-256):</p>
+<pre><code>5008fbf33d85807290d9d18ef2ccf77c26c83584c2ecb359b2b9b0d4632aa708  four_series_returns_corrected.csv
+67b88001829194240f33fe24b9eb7f198235ea076c1956317c4cbbd3173b6397  monthly_returns_corrected.csv</code></pre>
+<p>Run: <code>bash fetch_world.sh</code> → <code>python3 world.py</code>
+→ <code>python3 world_q.py</code>. FRED series (including SP500TR and
+the PWT 11 hours and employment series) and Yahoo Finance series (^GSPC)
+are fetched by the Python scripts on first run. A manifest
+(<code>MANIFEST.md</code>, <code>manifest.csv</code>) lists all 112
+input files with source, URL, retrieval time (the file’s modification
+time at retrieval, UTC) and SHA-256, plus the two frozen-engine files
+above; it is generated by <code>make_manifest.py</code> and accompanies
+the data release on the same terms as the first note’s.</p>
+
+<footer class="site">
+  <h2>Disclaimer</h2>
+  <p>This publication is independent, non-commercial research provided for informational and
+     educational purposes only. It does not constitute investment advice, an offer, or a
+     solicitation to buy or sell any security or financial product, and it is not personalized to
+     any reader's circumstances. The author is not a registered investment adviser in any
+     jurisdiction and does not provide individual advice. All investing involves risk, including
+     loss of principal. Past performance and backtested results do not guarantee future results.
+     Backtested results are hypothetical, do not reflect actual trading, and are net of no fees or
+     costs unless stated otherwise.</p>
+
+  <h2>Third-party marks</h2>
+  <p>This research is not affiliated with, endorsed by, or sponsored by MSCI, State Street,
+     Goldman Sachs, Bloomberg, BIS, or any index provider or data vendor mentioned. All trademarks
+     are the property of their respective owners. References to third-party estimates are for
+     scholarly comparison only.</p>
+  <p>The Capital Census is an independent, non-commercial research project. It is not affiliated
+     with State Street, MSCI, or any index provider, nor with any government statistical agency.
+     &lsquo;Global Market Portfolio&rsquo; is used as a generic academic term.</p>
+
+  <h2>Corrections policy</h2>
+  <p>Corrections are made openly. Superseded figures remain visible in the revision history. We do
+     not delete published results, including results unfavorable to our own prior claims.</p>
+
+  <p style="margin-top:1.5rem">The Capital Census &middot;
+     Keisuke Nakanishi &middot; Independent Researcher &middot; <a href="https://orcid.org/0009-0000-3780-9450">ORCID 0009-0000-3780-9450</a></p>
+</footer>
+
+</body>
+</html>
