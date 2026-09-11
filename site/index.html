@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Capital Census</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site">
+  <a class="wordmark" href="index.html">The Capital Census</a>
+  <nav>
+    <a href="index.html" aria-current="page">Monthly Index</a>
+    <a href="methodology.html">Methodology</a>
+    <a href="ledger.html">Verification Ledger</a>
+    <a href="data.html">Data</a>
+    <a href="hours.html">World Hour</a>
+  </nav>
+</header>
+
+<h1>The Capital Census</h1>
+<p class="lede">A measurement of what the world's investors actually hold &mdash; estimated from
+public data, with the method, the calibration record, and the corrections all published alongside
+the figures.</p>
+
+<p>Estimates of the global market portfolio exist, but their construction is not disclosed. This
+project takes the opposite position. Every input is public, every step is documented, and every
+revision stays on the record &mdash; including results that ran against our own hypotheses.</p>
+
+<div class="box">
+  <p style="margin:0">The index takes no discretionary bets. Its weights are the aggregate holdings
+  of all investors, chosen by no one.</p>
+</div>
+
+<h2>Capital Census Global Market Portfolio Index</h2>
+<p>Short form: <strong>CC-GMP Index</strong>. Published monthly. The index reports the composition
+and size of the investable global market portfolio. Since amendment 12 (9 September 2026) a dependent
+total-return level, <strong>CC-GMP TR</strong> (USD, gross of costs, 31 December 1975 = 1,000), is
+published alongside it as a separate series: <a href="cc_gmp_tr.csv">cc_gmp_tr.csv</a>. Values before
+the 31 August 2026 issue are <strong>backtested, not live</strong>. Level at 31 August 2026: 67,303.46.
+The composition index itself is unchanged by the addition.</p>
+
+<!--MI:START-->
+<p>As of <strong>2026-08-31</strong> &middot; seven published sleeves &middot; total investable market value <strong>USD 242.57tn</strong></p>
+<div class="scroll">
+<table>
+  <thead><tr><th>Sleeve</th><th class="num">Weight (%)</th><th class="num">Market value (USD tn)</th></tr></thead>
+  <tbody>
+    <tr><td>Global equity</td><td class="num">48.78</td><td class="num">118.34</td></tr>
+    <tr><td>DM government bonds</td><td class="num">18.41</td><td class="num">44.66</td></tr>
+    <tr><td>Credit</td><td class="num">15.65</td><td class="num">37.95</td></tr>
+    <tr><td>Securitised</td><td class="num">6.13</td><td class="num">14.86</td></tr>
+    <tr><td>EM debt</td><td class="num">3.78</td><td class="num">9.17</td></tr>
+    <tr><td>Inflation-linked</td><td class="num">1.77</td><td class="num">4.28</td></tr>
+    <tr><td>Gold</td><td class="num">5.49</td><td class="num">13.31</td></tr>
+    <tr><td><strong>Total</strong></td><td class="num"><strong>100.00</strong></td><td class="num"><strong>242.57</strong></td></tr>
+  </tbody>
+</table>
+</div>
+<p>Investment-grade credit and high yield are published as a single credit sleeve. The split is available as a labelled auxiliary estimate (IG 14.08%, HY 1.56%, on an uncalibrated A3 of 0.1) and must not be read as a measurement &mdash; see <a href="methodology.html">Methodology &sect;4</a>.</p>
+<h3>Reference dates and publication lags</h3>
+<div class="scroll">
+<table>
+  <thead><tr><th>Input</th><th>Reference date used</th><th class="num">Lag (months)</th></tr></thead>
+  <tbody>
+    <tr><td>Debt securities (BIS DSS)</td><td>2025-12-31</td><td class="num">8.0</td></tr>
+    <tr><td>Equity market capitalisation (World Bank)</td><td>2025</td><td class="num">8.0</td></tr>
+    <tr><td>Bank of Japan holdings</td><td>2026-03-31</td><td class="num">5.0</td></tr>
+    <tr><td>Federal Reserve holdings</td><td>2026-08-19</td><td class="num">&mdash;</td></tr>
+    <tr><td>ECB holdings</td><td>2026-W34</td><td class="num">&mdash;</td></tr>
+    <tr><td>Gold price (LBMA)</td><td>2026-08-26</td><td class="num">&mdash;</td></tr>
+    <tr><td>Equity roll-forward (ACWI)</td><td>2025-12-31→2026-08-26</td><td class="num">&mdash;</td></tr>
+  </tbody>
+</table>
+</div>
+<p>The quantity layer steps at its own natural frequency; each issue states the lag rather than smoothing it away. Published figures are never revised retrospectively &mdash; a correction appears as a new issue with its own note.</p>
+<!--MI:END-->
+
+<h2>Release note &mdash; No. 1</h2>
+<p><strong>This is the first official issue.</strong> It publishes seven sleeves. The rulebook
+calculates eight: investment-grade credit and high yield are reported here as one combined credit
+sleeve, because the parameter that separates them (A3) is uncalibrated and every free route to
+calibrating it has failed. Publishing the split as a measurement would claim a precision the data
+does not support, so it is carried as a labelled auxiliary estimate instead.</p>
+
+<p><strong>Nothing has been revised this month, because there is nothing prior to revise.</strong>
+From the next issue onward this note will state what changed, what was re-examined, and what did
+not confirm what we expected &mdash; on the same terms as results that did.</p>
+
+<p><strong>What remains unresolved, stated here rather than in a footnote.</strong> A3 is
+uncalibrated: no rating-level split of outstanding balances exists in free primary data, and the
+attempt record is published in
+<a href="methodology.html">Methodology &sect;4</a>. Central-bank holdings are deducted for three
+institutions only &mdash; the Federal Reserve, the ECB and the Bank of Japan &mdash; so holdings of
+the Bank of England, the People's Bank of China and others remain inside the figures. BIS statistics
+cover 53 countries, which biases the bond block toward underestimation. The full list is the
+<a href="methodology.html">ten disclosed limitations</a>, and they should be read before any figure
+here is used.</p>
+
+<p>The estimation engine behind these figures was <strong>not adopted</strong> for weight
+publication on its own terms; what was frozen and published first was the methodology. Seven-sleeve
+publication was authorised separately by the third revision of the rulebook. That sequence &mdash;
+methodology first, figures second, and only in the form the calibration actually supports &mdash; is
+the intended one.</p>
+
+<h2>What is disclosed</h2>
+<p>All rules, calibrations, and known limitations are disclosed in full, including results
+unfavorable to our own hypotheses. Ten limitations define the boundary within which any figure here
+may be read; they are listed in <a href="methodology.html">Methodology</a>, and readers are asked to
+read them before using any figure published on this site.</p>
+
+<h2>Papers</h2>
+<div class="scroll">
+<table>
+  <thead><tr><th>Paper</th><th>Status</th><th>Identifier</th></tr></thead>
+  <tbody>
+    <tr>
+      <td>Owning the Market as It Is: A Half-Century Look at the Global Market Portfolio</td>
+      <td>Posted</td>
+      <td><a href="https://doi.org/10.2139/ssrn.7394599">SSRN 7394599</a></td>
+    </tr>
+    <tr>
+      <td><a href="hours.html">Measuring Assets in Hours of the World&rsquo;s Work:
+          A Labour-Time Numeraire from Public Data</a></td>
+      <td>Draft v1.2, pending review</td>
+      <td class="tbd">[TBD: SSRN]</td>
+    </tr>
+    <tr>
+      <td>Can the Market Portfolio Beat 60/40? A 50-Year Equivalence Test</td>
+      <td>In preparation</td>
+      <td class="tbd">[TBD: SSRN / arXiv q-fin.PM]</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h2>Data</h2>
+<p><a href="data.html">50-Year Weight History of the Investable Global Market Portfolio
+(1976&ndash;2026)</a> &mdash; released as a citable dataset with a persistent identifier, a
+manifest, and SHA-256 checksums.</p>
+
+<h2>Readers in Japan</h2>
+<p>The author resides in Japan. This site provides general information to an unspecified audience
+and does not constitute investment advisory business under the Financial Instruments and Exchange
+Act of Japan. Individual consultations are not accepted.</p>
+
+<h2 id="licence">Licence</h2>
+<p>Monthly issues of the composition index, the CC-GMP TR series and the CC-WH (Capital Census World Hour)
+index series, when released as data, are licensed under
+<a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>: free for non-commercial use with
+attribution. The rulebook, the verification ledger and the text of the research notes are released under
+<a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">CC BY-NC-ND 4.0</a>. Commercial use &mdash; as the
+target or benchmark of a fund, ETF, model portfolio, wrap or robo-advisory product, or inclusion in a paid
+information product &mdash; requires a separate index licence; contact the author. The fifty-year weight history
+already archived on Zenodo remains under CC BY 4.0 and is not affected (decision of 9 September 2026;
+extended to the CC-WH series and the note texts on 11 September 2026).</p>
+
+<footer class="site">
+  <h2>Disclaimer</h2>
+  <p>This publication is independent, non-commercial research provided for informational and
+     educational purposes only. It does not constitute investment advice, an offer, or a
+     solicitation to buy or sell any security or financial product, and it is not personalized to
+     any reader's circumstances. The author is not a registered investment adviser in any
+     jurisdiction and does not provide individual advice. All investing involves risk, including
+     loss of principal. Past performance and backtested results do not guarantee future results.
+     Backtested results are hypothetical, do not reflect actual trading, and are net of no fees or
+     costs unless stated otherwise.</p>
+
+  <h2>Third-party marks</h2>
+  <p>This research is not affiliated with, endorsed by, or sponsored by MSCI, State Street,
+     Goldman Sachs, Bloomberg, BIS, or any index provider or data vendor mentioned. All trademarks
+     are the property of their respective owners. References to third-party estimates are for
+     scholarly comparison only.</p>
+  <p>The Capital Census is an independent, non-commercial research project. It is not affiliated
+     with State Street, MSCI, or any index provider, nor with any government statistical agency.
+     &lsquo;Global Market Portfolio&rsquo; and &lsquo;world hour&rsquo; are used as generic terms;
+     &lsquo;CC-GMP&rsquo;, &lsquo;CC-WH&rsquo; and &lsquo;The Capital Census&rsquo; are the author&rsquo;s names for
+     this project and its series.</p>
+
+  <h2>Corrections policy</h2>
+  <p>Corrections are made openly. Superseded figures remain visible in the revision history. We do
+     not delete published results, including results unfavorable to our own prior claims.</p>
+
+  <p style="margin-top:1.5rem">The Capital Census &middot;
+     Keisuke Nakanishi &middot; Independent Researcher &middot; <a href="https://orcid.org/0009-0000-3780-9450">ORCID 0009-0000-3780-9450</a></p>
+</footer>
+
+</body>
+</html>
