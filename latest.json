@@ -1,0 +1,44 @@
+{
+ "asof": "2026-09-30",
+ "published": "2026-10-03T10:25:52",
+ "total_usd_tn": 240.5866,
+ "sleeves": [
+  {
+   "name": "Global equity",
+   "weight_pct": 48.5122,
+   "usd_tn": 116.714
+  },
+  {
+   "name": "DM government bonds",
+   "weight_pct": 18.6534,
+   "usd_tn": 44.8775
+  },
+  {
+   "name": "Credit",
+   "weight_pct": 15.7809,
+   "usd_tn": 37.9668
+  },
+  {
+   "name": "Securitised",
+   "weight_pct": 6.1941,
+   "usd_tn": 14.9022
+  },
+  {
+   "name": "EM debt",
+   "weight_pct": 3.9294,
+   "usd_tn": 9.4537
+  },
+  {
+   "name": "Inflation-linked",
+   "weight_pct": 1.7585,
+   "usd_tn": 4.2307
+  },
+  {
+   "name": "Gold",
+   "weight_pct": 5.1714,
+   "usd_tn": 12.4418
+  }
+ ],
+ "source": "CC-GMP Index, issue 2026-09-30 (seven published sleeves)",
+ "licence": "CC BY-NC 4.0"
+}

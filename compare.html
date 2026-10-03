@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Compare your portfolio with the world &mdash; The Capital Census</title>
+<meta name="description" content="Enter your asset allocation and see how it differs from the investable global market portfolio, as published monthly by The Capital Census.">
+<link rel="stylesheet" href="style.css">
+<style>
+  .cmp-grid { display: grid; grid-template-columns: minmax(9rem, 1.3fr) 5.5rem 1fr; gap: .5rem .9rem; align-items: center; margin: 1rem 0; }
+  .cmp-grid .h { font-weight: 600; font-size: .9rem; color: var(--muted); border-bottom: 1px solid var(--rule); padding-bottom: .35rem; }
+  .cmp-grid input[type=number] { width: 100%; font: inherit; font-variant-numeric: tabular-nums; text-align: right;
+    padding: .35rem .5rem; border: 1px solid var(--rule); border-radius: 4px; background: var(--bg); color: var(--fg); }
+  .cmp-grid input[type=number]:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .bars { display: grid; grid-template-rows: 1fr 1fr; gap: 3px; }
+  .bar { position: relative; height: .7rem; background: var(--box); border-radius: 2px; overflow: hidden; }
+  .bar > i { position: absolute; inset: 0 auto 0 0; display: block; border-radius: 2px; transition: width .15s ease; }
+  .bar.world > i { background: var(--muted); opacity: .55; }
+  .bar.you > i { background: var(--accent); }
+  .legend { display: flex; gap: 1.25rem; font-size: .85rem; color: var(--muted); margin: .25rem 0 0; }
+  .legend i { display: inline-block; width: .9rem; height: .6rem; border-radius: 2px; vertical-align: middle; margin-right: .35rem; }
+  .legend .w { background: var(--muted); opacity: .55; }
+  .legend .y { background: var(--accent); }
+  .status { font-size: .92rem; color: var(--muted); margin: .25rem 0 1rem; }
+  .status strong { color: var(--fg); }
+  .warn { color: var(--accent); font-weight: 600; }
+  .controls { display: flex; flex-wrap: wrap; gap: .75rem 1.25rem; align-items: center; margin: 1rem 0; font-size: .92rem; }
+  button { font: inherit; font-size: .9rem; padding: .35rem .8rem; border: 1px solid var(--rule); border-radius: 4px;
+    background: var(--box); color: var(--fg); cursor: pointer; }
+  button:hover { border-color: var(--accent); }
+  td.pos { color: var(--accent); }
+  @media (max-width: 34rem) { .cmp-grid { grid-template-columns: minmax(7rem, 1fr) 4.5rem; } .cmp-grid .bars, .cmp-grid .h.bars-h { grid-column: 1 / -1; } }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <a class="wordmark" href="index.html">The Capital Census</a>
+  <nav>
+    <a href="index.html">Monthly Index</a>
+    <a href="methodology.html">Methodology</a>
+    <a href="ledger.html">Verification Ledger</a>
+    <a href="data.html">Data</a>
+    <a href="hours.html">World Hour</a>
+    <a href="income.html">Earns and Pays</a>
+    <a href="compare.html" aria-current="page">Compare</a>
+  </nav>
+</header>
+
+<h1>Compare your portfolio with the world</h1>
+<p class="lede">Enter the share of your portfolio in each asset class. The page shows how far your
+allocation sits from the aggregate holdings of all investors &mdash; the investable global market
+portfolio &mdash; as measured in the latest monthly issue.</p>
+
+<p class="status" id="asof">Loading the latest issue&hellip;</p>
+
+<div class="cmp-grid" id="grid" role="table" aria-label="Your allocation against the world portfolio">
+  <div class="h">Asset class</div>
+  <div class="h" style="text-align:right">You (%)</div>
+  <div class="h bars-h">World vs you</div>
+</div>
+<p class="legend"><span><i class="w"></i>World</span><span><i class="y"></i>You</span></p>
+
+<div class="controls">
+  <span class="status" style="margin:0">Your inputs total <strong id="total">0.00%</strong><span id="totwarn"></span></span>
+  <label><input type="checkbox" id="norm"> Normalise my inputs to 100%</label>
+  <button type="button" id="fill">Start from the world</button>
+  <button type="button" id="clear">Clear</button>
+  <button type="button" id="copy">Copy as text</button>
+</div>
+
+<h2>Differences</h2>
+<div class="scroll">
+<table id="diff">
+  <thead><tr><th>Asset class</th><th class="num">World (%)</th><th class="num">You (%)</th><th class="num">Difference (pt)</th></tr></thead>
+  <tbody></tbody>
+</table>
+</div>
+<p class="status">Distance from the world portfolio (half the sum of absolute differences):
+<strong id="active">&mdash;</strong>. At 0 your allocation is the world's; at 100 you hold nothing the
+world holds in the same proportion. This is a description of your position relative to the aggregate,
+not a judgement of it.</p>
+
+<h2>How to map your holdings</h2>
+<p>The world portfolio is published in seven sleeves. Cash is not part of the investable market
+portfolio, so its world weight is zero; it is included here only so that your inputs can sum to 100.</p>
+<div class="scroll">
+<table>
+  <thead><tr><th>Sleeve</th><th>Typical holdings</th></tr></thead>
+  <tbody>
+    <tr><td>Global equity</td><td>Listed shares and equity funds of any country, developed or emerging, including REITs</td></tr>
+    <tr><td>DM government bonds</td><td>Nominal bonds issued by developed-market central governments (Treasuries, Bunds, JGBs, gilts) and funds holding them</td></tr>
+    <tr><td>Credit</td><td>Corporate and bank bonds, including covered bonds, and bond funds holding them; investment grade and high yield alike (published as one sleeve)</td></tr>
+    <tr><td>Securitised</td><td>Mortgage-backed and asset-backed securities, including agency mortgage pass-throughs and CLOs, and funds holding them</td></tr>
+    <tr><td>EM debt</td><td>Bonds issued by emerging-market governments and companies, in any currency</td></tr>
+    <tr><td>Inflation-linked</td><td>Inflation-indexed government bonds (TIPS, index-linked gilts, JGBi) and funds holding them</td></tr>
+    <tr><td>Gold</td><td>Bullion, coins, and physically backed gold funds</td></tr>
+    <tr><td>Cash</td><td>Deposits, money-market funds, and bills under one year</td></tr>
+  </tbody>
+</table>
+</div>
+<p>A balanced fund should be split into its sleeves using its published allocation. Private assets,
+cryptoassets, commodities other than gold, and your own home are outside the measured universe and
+have no world weight here; leave them out or add them to cash, and read the result accordingly.</p>
+
+<h2>What the comparison is, and is not</h2>
+<p>The world weights are those of the current <a href="index.html">CC-GMP Index</a> issue: market
+values in US dollars, gross of costs, estimated from public data within the
+<a href="methodology.html">ten disclosed limitations</a>. They are a measurement of what all
+investors together hold, chosen by no one. The comparison therefore shows where your allocation
+departs from that aggregate. It does not say whether the departure is right for you, and nothing on
+this page is a recommendation. The weights are stated in US-dollar terms; no claim is made about any
+other base currency.</p>
+<p>Your inputs stay in your browser. Nothing you enter is sent anywhere. The link in your address
+bar encodes your inputs so you can bookmark or share them.</p>
+
+<footer class="site">
+  <h2>Disclaimer</h2>
+  <p>This page is independent, non-commercial research provided for informational and educational
+     purposes only. It does not constitute investment advice, an offer, or a solicitation to buy or
+     sell any security or financial product, and it is not personalized to any reader's
+     circumstances. The author is not a registered investment adviser in any jurisdiction and does
+     not provide individual advice. All investing involves risk, including loss of principal.</p>
+  <h2>Readers in Japan</h2>
+  <p>The author resides in Japan. This page provides general information to an unspecified audience
+     and does not constitute investment advisory business under the Financial Instruments and
+     Exchange Act of Japan. Individual consultations are not accepted.</p>
+  <p style="margin-top:1.5rem">The Capital Census &middot; Keisuke Nakanishi &middot; Independent
+     Researcher &middot; <a href="https://orcid.org/0009-0000-3780-9450">ORCID 0009-0000-3780-9450</a>
+     &middot; World weights: CC-GMP Index, <a href="index.html#licence">CC BY-NC 4.0</a></p>
+</footer>
+
+<script>
+(function () {
+  // Fallback copy of the latest issue, used when latest.json cannot be fetched (e.g. file://).
+  // Regenerate both with: python3 build_latest_json.py <issue json>
+  var FALLBACK = {"asof":"2026-09-30","total_usd_tn":240.5866,"sleeves":[
+    {"name":"Global equity","weight_pct":48.5122},
+    {"name":"DM government bonds","weight_pct":18.6534},
+    {"name":"Credit","weight_pct":15.7809},
+    {"name":"Securitised","weight_pct":6.1941},
+    {"name":"EM debt","weight_pct":3.9294},
+    {"name":"Inflation-linked","weight_pct":1.7585},
+    {"name":"Gold","weight_pct":5.1714}]};
+
+  var $ = function (id) { return document.getElementById(id); };
+  var world = null, rows = [], inputs = [];
+
+  function fmt(x, d) { return (Math.round(x * 100) / 100).toFixed(d == null ? 2 : d); }
+  function signed(x) { var s = fmt(x); return x > 0.004 ? "+" + s : s; }
+
+  function readInputs() { return inputs.map(function (el) { var v = parseFloat(el.value); return isFinite(v) && v >= 0 ? v : 0; }); }
+
+  function persist(vals) {
+    try { localStorage.setItem("cc_compare", JSON.stringify(vals)); } catch (e) {}
+    try {
+      var q = vals.some(function (v) { return v > 0; }) ? "?w=" + vals.map(function (v) { return fmt(v, 2).replace(/\.?0+$/, ""); }).join(",") : location.pathname;
+      history.replaceState(null, "", q);
+    } catch (e) {}
+  }
+
+  function restore() {
+    var m = /[?&]w=([\d.,]+)/.exec(location.search);
+    if (m) { var a = m[1].split(",").map(parseFloat); if (a.length === rows.length) return a; }
+    try { var s = localStorage.getItem("cc_compare"); if (s) { var b = JSON.parse(s); if (b.length === rows.length) return b; } } catch (e) {}
+    return null;
+  }
+
+  function render() {
+    var raw = readInputs(), total = raw.reduce(function (a, b) { return a + b; }, 0);
+    var norm = $("norm").checked && total > 0;
+    var you = raw.map(function (v) { return norm ? v * 100 / total : v; });
+    $("total").textContent = fmt(total) + "%";
+    $("totwarn").innerHTML = (Math.abs(total - 100) > 0.05 && !norm) ? ' <span class="warn">&mdash; not 100%; differences below are taken at face value</span>' : "";
+    var scale = 10 * Math.ceil(Math.max.apply(null, rows.map(function (r) { return r.w; }).concat(you)) / 10) || 10;
+    var tb = $("diff").tBodies[0], html = "", act = 0;
+    rows.forEach(function (r, i) {
+      r.wb.style.width = (r.w / scale * 100) + "%";
+      r.yb.style.width = (Math.min(you[i], scale) / scale * 100) + "%";
+      var d = you[i] - r.w; act += Math.abs(d);
+      html += "<tr><td>" + r.name + "</td><td class=\"num\">" + fmt(r.w) + "</td><td class=\"num\">" + fmt(you[i]) +
+              "</td><td class=\"num" + (Math.abs(d) >= 5 ? " pos" : "") + "\">" + signed(d) + "</td></tr>";
+    });
+    tb.innerHTML = html;
+    $("active").textContent = total > 0 ? fmt(act / 2) : "—";
+    persist(raw);
+  }
+
+  function build(data) {
+    world = data;
+    var g = $("grid");
+    var sleeves = data.sleeves.concat([{ name: "Cash", weight_pct: 0 }]);
+    sleeves.forEach(function (s) {
+      var name = document.createElement("div"); name.textContent = s.name;
+      var inp = document.createElement("input"); inp.type = "number"; inp.min = "0"; inp.max = "100"; inp.step = "0.1"; inp.inputMode = "decimal"; inp.placeholder = "0"; inp.setAttribute("aria-label", s.name + " percent");
+      var bars = document.createElement("div"); bars.className = "bars";
+      var wb = document.createElement("div"); wb.className = "bar world"; var wi = document.createElement("i"); wb.appendChild(wi); wb.title = "World " + fmt(s.weight_pct) + "%";
+      var yb = document.createElement("div"); yb.className = "bar you"; var yi = document.createElement("i"); yb.appendChild(yi);
+      bars.appendChild(wb); bars.appendChild(yb);
+      g.appendChild(name); g.appendChild(inp); g.appendChild(bars);
+      rows.push({ name: s.name, w: s.weight_pct, wb: wi, yb: yi }); inputs.push(inp);
+      inp.addEventListener("input", render);
+    });
+    $("asof").innerHTML = "World weights as of <strong>" + data.asof + "</strong> &middot; seven published sleeves &middot; total investable market value USD " + fmt(data.total_usd_tn) + "tn &middot; <a href=\"index.html\">issue</a>";
+    var r = restore(); if (r) inputs.forEach(function (el, i) { el.value = r[i] ? fmt(r[i], 2).replace(/\.?0+$/, "") : ""; });
+    $("norm").addEventListener("change", render);
+    $("fill").addEventListener("click", function () { inputs.forEach(function (el, i) { el.value = i < rows.length - 1 ? fmt(rows[i].w, 2) : "0"; }); render(); });
+    $("clear").addEventListener("click", function () { inputs.forEach(function (el) { el.value = ""; }); render(); });
+    $("copy").addEventListener("click", function () {
+      var raw = readInputs(), t = raw.reduce(function (a, b) { return a + b; }, 0), norm = $("norm").checked && t > 0;
+      var lines = ["Your portfolio vs the world portfolio (The Capital Census, as of " + world.asof + ")", ""];
+      rows.forEach(function (r, i) { var y = norm ? raw[i] * 100 / t : raw[i]; lines.push(r.name + ": you " + fmt(y) + "% / world " + fmt(r.w) + "% / " + signed(y - r.w) + " pt"); });
+      lines.push("", "Distance from the world portfolio: " + $("active").textContent, location.href);
+      var txt = lines.join("\n");
+      if (navigator.clipboard) navigator.clipboard.writeText(txt).then(function () { $("copy").textContent = "Copied"; setTimeout(function () { $("copy").textContent = "Copy as text"; }, 1500); });
+    });
+    render();
+  }
+
+  fetch("latest.json", { cache: "no-cache" }).then(function (r) { if (!r.ok) throw 0; return r.json(); })
+    .then(build).catch(function () { build(FALLBACK); });
+})();
+</script>
+
+</body>
+</html>
