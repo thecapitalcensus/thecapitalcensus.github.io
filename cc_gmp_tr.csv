@@ -608,3 +608,4 @@ date,level,monthly_return,source,label
 2026-06-30,66250.2832,-0.008757011769,B6.1 history,"backtested, not live"
 2026-07-31,65824.2426,-0.006430773906,ETF implementation,"backtested, not live"
 2026-08-31,67303.4615,0.02247225062,ETF implementation,published
+2026-09-30,65664.4476,-0.02435259441,ETF implementation,published
