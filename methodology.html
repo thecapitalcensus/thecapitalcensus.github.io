@@ -79,8 +79,8 @@ reference date and lag of every input so the reader can see which vintages moved
   <tbody>
     <tr><td>Global equity</td><td>World Bank market capitalisation (prior year-end) &times; ACWI price roll-forward &times; A1</td></tr>
     <tr><td>DM government bonds</td><td>BIS S13 for investable developed markets &minus; inflation-linked &minus; central-bank holdings (Fed, ECB, BoJ)</td></tr>
-    <tr><td>IG credit</td><td>(S12 + S11 &minus; S125A) for investable developed markets &times; A9&prime; &times; (1 &minus; A3)</td></tr>
-    <tr><td>High yield</td><td>same base &times; A9&prime; &times; A3</td></tr>
+    <tr><td>IG credit</td><td>[(S12 &minus; S125A) &times; A9&prime; + S11] for investable developed markets &times; (1 &minus; A3). A9&prime; applies to financial issuers only (documentation corrected 2026-11-06; see <a href="#versions">Version history</a>)</td></tr>
+    <tr><td>High yield</td><td>same base &times; A3</td></tr>
     <tr><td>Securitised</td><td>S125A for investable developed markets &minus; Fed holdings of MBS and agency debt</td></tr>
     <tr><td>EM debt</td><td>investable emerging markets: S13 + (S12 + S11 &minus; S125A) &times; A9&prime; + S125A</td></tr>
     <tr><td>Inflation-linked</td><td>country-level aggregation (measured countries + residual band from measured ratios)</td></tr>
@@ -319,6 +319,13 @@ the same prominence as favourable ones.</strong></p>
 <table>
   <thead><tr><th>Version</th><th>Date</th><th>Change</th></tr></thead>
   <tbody>
+    <tr><td>v1.0, 3rd revision, documentation correction</td><td>2026-11-06</td>
+        <td>The IG credit and high-yield rows of the sleeve table stated (S12 + S11 &minus; S125A) &times;
+            A9&prime;. The frozen code applies A9&prime; to financial issuers only, (S12 &minus; S125A)
+            &times; A9&prime; + S11, and every issue to No. 2 was computed that way. The rows now state what the
+            code does. The rule is unchanged; the text was wrong. A rebuild that followed the old text
+            understated credit in issue No. 3 (Correction No. 2 in the
+            <a href="ledger.html">Verification Ledger</a>).</td></tr>
     <tr><td>v1.0, 3rd revision</td><td>2026-08-28</td>
         <td>Canonical notation adopted: calculated 8 / published 7, with IG and high yield merged
             for official publication and the split retained as an uncalibrated auxiliary

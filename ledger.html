@@ -532,6 +532,72 @@ low (more so for bond-heavy series), so we have added it to the limitation label
 P-values are robust to this via Newey&ndash;West. We record the error correction and the
 interpretive limitation separately because they are different in kind.</p>
 
+<h3>Correction No. 2 &mdash; Credit understated in monthly issue No. 3</h3>
+<p><em>Published 2026-11-06. Introduced 2026-11-06 (issue No. 3); discovered and corrected the same day.</em></p>
+
+<p><strong>What was wrong.</strong> Issue No. 3 (reference date 31 October 2026) published the credit
+sleeve at 37.55tn. On the formula that produced every earlier issue it is 37.98tn. The understatement,
+0.42tn, moved every published weight.</p>
+<div class="scroll">
+<table>
+  <thead><tr><th>Sleeve</th><th class="num">No. 3 as first published (%)</th><th class="num">No. 3 corrected (%)</th></tr></thead>
+  <tbody>
+    <tr><td>Global equity</td><td class="num">48.26</td><td class="num">48.18</td></tr>
+    <tr><td>DM government bonds</td><td class="num">18.93</td><td class="num">18.89</td></tr>
+    <tr><td>Credit</td><td class="num">15.80</td><td class="num">15.95</td></tr>
+    <tr><td>Securitised</td><td class="num">6.27</td><td class="num">6.26</td></tr>
+    <tr><td>EM debt</td><td class="num">3.98</td><td class="num">3.97</td></tr>
+    <tr><td>Inflation-linked</td><td class="num">1.78</td><td class="num">1.78</td></tr>
+    <tr><td>Gold</td><td class="num">4.98</td><td class="num">4.97</td></tr>
+    <tr><td><strong>Total (USD tn)</strong></td><td class="num"><strong>237.66</strong></td><td class="num"><strong>238.08</strong></td></tr>
+    <tr><td>Auxiliary IG / HY (%)</td><td class="num">14.22 / 1.58</td><td class="num">14.36 / 1.60</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p><strong>The cause.</strong> No. 3 was the first issue on an estimation engine rebuilt after the original
+code was lost (release note No. 3). The rebuild took the credit formula from the Methodology page, which
+applies the investor-holdings ratio A9&prime; to all corporate issuance: (S12 + S11 &minus; S125A) &times;
+A9&prime;. The frozen code had applied it to financial issuers only: (S12 &minus; S125A) &times; A9&prime;
++ S11. The code&rsquo;s scope is the consistent one. A9&prime; is calibrated on covered bonds that issuing
+banks retain, and non-financial companies issue no covered bonds. The page text had misstated the code
+since the methodology was frozen. No. 1 and No. 2 were produced by the frozen code and are correct as
+published.</p>
+
+<p><strong>How it was found.</strong> Release note No. 3 disclosed that the rebuilt engine did not reproduce
+No. 2&rsquo;s credit sleeve and that the cause was open. The same day, the gap was checked against the
+earlier BIS vintage. It appeared in 2025 Q4 as well as 2026 Q1, which ruled out a one-off data revision
+and pointed to the formula. Applying A9&prime; to financial issuers only closes it in both vintages.</p>
+<div class="scroll">
+<table>
+  <thead><tr><th>Check</th><th class="num">Page formula</th><th class="num">Frozen-code formula</th></tr></thead>
+  <tbody>
+    <tr><td>No. 2 credit, rebuilt minus published (tn)</td><td class="num">&minus;0.41</td><td class="num">+0.01</td></tr>
+    <tr><td>No. 2, largest weight difference, all sleeves (pt)</td><td class="num">0.14</td><td class="num">0.005</td></tr>
+    <tr><td>No. 1 credit, rebuilt minus published (tn, BIS 2025 Q4)</td><td class="num">&minus;0.51</td><td class="num">&minus;0.09</td></tr>
+  </tbody>
+</table>
+</div>
+<p>The remaining &minus;0.09tn on No. 1 is consistent with revisions to the 2025 Q4 BIS vintage since
+No. 1 was computed. EM debt applies A9&prime; to S12 + S11, as the page states; that form reproduces No. 2
+to within 0.001tn and is unchanged.</p>
+
+<p><strong>Effect on other published series: none.</strong> The CC-GMP TR level for 31 October 2026
+(65,451.46) uses the January reconstitution weights of the weight history, not the monthly composition,
+and is unchanged. Issues No. 1 and No. 2, and the fifty-year weight history (Dataset D), were produced by the
+frozen code and are unaffected.</p>
+
+<p><strong>Remedies.</strong></p>
+<ol>
+  <li>No. 3 is re-issued with the corrected figures. The figures first published remain visible here and in
+      release note No. 3.</li>
+  <li>The credit rows of the Methodology page now state the formula the code applies, and the change is
+      recorded in its version history as a documentation correction, not a change of rule.</li>
+  <li>Before each issue, the engine now recomputes the previous published issue on that issue&rsquo;s own BIS
+      vintage, and the issue is blocked if any weight differs by more than 0.10 points. This check
+      would have stopped No. 3.</li>
+</ol>
+
 <footer class="site">
   <h2>Disclaimer</h2>
   <p>This publication is independent, non-commercial research provided for informational and
