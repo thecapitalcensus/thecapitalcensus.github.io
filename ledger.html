@@ -598,6 +598,48 @@ frozen code and are unaffected.</p>
       would have stopped No. 3.</li>
 </ol>
 
+<h3>Correction No. 3 &mdash; CC-GMP TR for October 2026 computed on the wrong ETFs for two sleeves</h3>
+<p><em>Published 2026-11-06. Introduced 2026-11-06 (issue No. 3); discovered and corrected the same day.</em></p>
+
+<p><strong>What was wrong.</strong> The CC-GMP TR level for 31 October 2026 was published at 65,451.46
+(&minus;0.324% for the month). On the registered ETF implementation it is 65,432.16 (&minus;0.354%).
+The difference is &minus;0.03 points of monthly return, or &minus;19.30 index points.</p>
+<div class="scroll">
+<table>
+  <thead><tr><th>Sleeve</th><th>Rebuilt TR code, as first used</th><th>Registered implementation</th></tr></thead>
+  <tbody>
+    <tr><td>Inflation-linked</td><td>TIP</td><td>0.5009 TIP + 0.4991 WIP</td></tr>
+    <tr><td>Gold</td><td>GLD</td><td>IAU (amendment 13)</td></tr>
+    <tr><td>Other sleeves</td><td colspan="2">Same: ACWI; 0.42 IEF + 0.58 BWX; LQD; HYG; MBB; EMB</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p><strong>The cause.</strong> The TR code was rebuilt together with the estimation engine after the
+original code was lost. The rebuild did not take its ETF mapping from the TR metadata deposited with issue
+No. 2 (cc_gmp_tr_2026-09-30.json on Zenodo), which records it. The check it was run against, September 2026,
+came out at &minus;2.431% against &minus;2.435% published. That gap was accepted as close enough; it was the
+signal of the mismatch.</p>
+
+<p><strong>How it was found.</strong> While preparing the Zenodo deposit for No. 3, the deposited TR
+metadata was read against the rebuilt code. On the registered mapping the rebuilt code gives &minus;2.4343%
+for September against &minus;2.4353% published.</p>
+
+<p><strong>Effect on other published series: none.</strong> Levels up to 30 September 2026 were produced
+by the frozen code and are unchanged. The composition of issue No. 3 (as corrected in Correction No. 2) does
+not depend on the TR series. The statement in Correction No. 2 that the October TR level was unchanged was
+true of that correction and is superseded here.</p>
+
+<p><strong>Remedies.</strong></p>
+<ol>
+  <li>The October 2026 row of cc_gmp_tr.csv is corrected. The figure first published remains visible here and
+      in release note No. 3.</li>
+  <li>The TR code now uses the registered mapping, cited to the deposited metadata.</li>
+  <li>Before each month, the TR code recomputes the previous published month and stops if its return differs
+      by more than 0.002 points. The first mapping (a 0.004-point gap on September) would have been stopped;
+      the registered mapping (0.001) passes.</li>
+</ol>
+
 <footer class="site">
   <h2>Disclaimer</h2>
   <p>This publication is independent, non-commercial research provided for informational and
